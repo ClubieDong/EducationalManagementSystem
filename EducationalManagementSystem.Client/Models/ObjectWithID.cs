@@ -10,6 +10,6 @@ namespace EducationalManagementSystem.Client.Models
 {
     public abstract class ObjectWithID
     {
-        protected uint? ID { get; set; }
+        public uint? ID { get; protected set; }
     }
 }

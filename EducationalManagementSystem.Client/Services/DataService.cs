@@ -85,7 +85,7 @@ namespace EducationalManagementSystem.Client.Services
         {
             var type = property.DeclaringType;
             var field = type.GetField($"_{property.Name}", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (field.GetValue(obj) == null)
+            if (obj.ID.HasValue && field.GetValue(obj) == null)
                 using (var cmd = Connection.CreateCommand())
                 {
                     cmd.CommandText = $"SELECT {property.Name} FROM {type.Name} WHERE ID = {obj.ID}";
@@ -105,6 +105,8 @@ namespace EducationalManagementSystem.Client.Services
             if (field.GetValue(obj) == value)
                 return;
             field.SetValue(obj, value);
+            if (!obj.ID.HasValue)
+                return;
             using (var cmd = Connection.CreateCommand())
             {
                 cmd.CommandText = $"UPDATE {type.Name} SET {property.Name} = @value WHERE ID = {obj.ID}";
