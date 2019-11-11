@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace EducationalManagementSystem.Client.Models
 {
     public abstract class ObjectWithID
     {
-        public uint? ID { get; private set; }
+        protected uint? ID { get; set; }
     }
 }

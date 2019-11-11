@@ -81,18 +81,10 @@ namespace EducationalManagementSystem.Client.Services
             { null, MySqlDbType.Guid },
         };
 
-        private FieldInfo GetPrivateField(Type type, string propertyName)
-        {
-            if (type == typeof(object))
-                return null;
-            var field = type.GetField(propertyName, BindingFlags.NonPublic | BindingFlags.Instance);
-            return field ?? GetPrivateField(type.BaseType, propertyName);
-        }
-
         public object GetValue(ObjectWithID obj, PropertyInfo property)
         {
-            var type = obj.GetType();
-            var field = GetPrivateField(type, $"_{property.Name}");
+            var type = property.DeclaringType;
+            var field = type.GetField($"_{property.Name}", BindingFlags.NonPublic | BindingFlags.Instance);
             if (field.GetValue(obj) == null)
                 using (var cmd = Connection.CreateCommand())
                 {
@@ -108,8 +100,10 @@ namespace EducationalManagementSystem.Client.Services
 
         public void SetValue(ObjectWithID obj, PropertyInfo property, object value)
         {
-            var type = obj.GetType();
-            var field = GetPrivateField(type, $"_{property.Name}");
+            var type = property.DeclaringType;
+            var field = type.GetField($"_{property.Name}", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (field.GetValue(obj) == value)
+                return;
             field.SetValue(obj, value);
             using (var cmd = Connection.CreateCommand())
             {
