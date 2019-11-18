@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EducationalManagementSystem.Client.Models.UserModels;
+using EducationalManagementSystem.Client.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,20 @@ namespace EducationalManagementSystem.Client
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var user1 = User.GetByID(1);
+            var user2 = User.GetByID(2);
+            MessageBox.Show(user1.Name);
+            MessageBox.Show(user1.UserID);
+            MessageBox.Show(user2.Name);
+            MessageBox.Show(user2.UserID);
+            user1.Name = "董世晨";
+            MessageBox.Show(user1.Name);
+            MessageBox.Show(user1.Name);
+            MessageBox.Show(user1.Name);
         }
     }
 }
