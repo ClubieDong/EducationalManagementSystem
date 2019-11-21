@@ -14,6 +14,8 @@ namespace EducationalManagementSystem.Client.Services
     {
         object GetValue(ObjectWithID obj, PropertyInfo property);
         void SetValue(ObjectWithID obj, PropertyInfo property, object value);
+        ObjectWithID NewObject(Type type);
+        void RemoveObject(ObjectWithID obj);
     }
 
     public class DataServiceFactory
@@ -72,11 +74,42 @@ namespace EducationalManagementSystem.Client.Services
                 return;
             using (var cmd = Connection.CreateCommand())
             {
-                cmd.CommandText = $"UPDATE {type.Name} SET {property.Name} = @value WHERE ID = {obj.ID}";
-                cmd.Parameters.Add("@value", _TypeToDbType[property.PropertyType]);
-                cmd.Parameters["@value"].Value = value;
+                cmd.CommandText = $"UPDATE {type.Name} SET {property.Name} = @Value WHERE ID = {obj.ID}";
+                cmd.Parameters.Add("@Value", _TypeToDbType[property.PropertyType]);
+                cmd.Parameters["@Value"].Value = value;
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public ObjectWithID NewObject(Type type)
+        {
+            Type baseType = type;
+            while (baseType.BaseType != typeof(ObjectWithID))
+                baseType = baseType.BaseType;
+            using (var cmd = Connection.CreateCommand())
+            {
+                cmd.CommandText = $"INSERT INTO {baseType.Name} (Type) VALUES (@Type)";
+                cmd.Parameters.Add("@Type", MySqlDbType.Guid);
+                cmd.Parameters["@Type"].Value = type.GUID;
+                cmd.ExecuteNonQuery();
+            }
+            using (var cmd = Connection.CreateCommand())
+            {
+                cmd.CommandText = $"SELECT LAST_INSERT_ID()";
+                using (var reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    var types = new Type[] { typeof(uint) };
+                    var paras = new object[] { reader[0] };
+                    var result = (ObjectWithID)type.GetConstructor(types).Invoke(paras);
+                    return result;
+                }
+            }
+        }
+
+        public void RemoveObject(ObjectWithID obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,21 +5,19 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace EducationalManagementSystem.Client.Models.UserModels
 {
-    [SuppressMessage("样式", "IDE0044:添加只读修饰符", Justification = "<挂起>")]
-    [SuppressMessage("代码质量", "IDE0051:删除未使用的私有成员", Justification = "<挂起>")]
-    public class User : ObjectWithID
+    public abstract class User : ObjectWithID
     {
         private static readonly Dictionary<uint, User> _UserList = new Dictionary<uint, User>();
-        public static User GetByID(uint id, Type type)
+        public static User GetByID(uint id, Guid guid)
         {
             if (_UserList.TryGetValue(id, out User result))
                 return result;
+            var type = _GuidToType[guid];
             result = (User)type.GetConstructor(Type.EmptyTypes).Invoke(null);
             result.ID = id;
             _UserList.Add(id, result);
             return result;
         }
-        public static User GetByID(uint id) => GetByID(id, typeof(User));
 
         private string _UserID;
         public string UserID

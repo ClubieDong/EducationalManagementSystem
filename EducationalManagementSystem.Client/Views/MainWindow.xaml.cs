@@ -1,8 +1,10 @@
 ﻿using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,16 +31,23 @@ namespace EducationalManagementSystem.Client
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var user1 = User.GetByID(1);
-            var user2 = User.GetByID(2);
-            MessageBox.Show(user1.Name);
-            MessageBox.Show(user1.UserID);
-            MessageBox.Show(user2.Name);
-            MessageBox.Show(user2.UserID);
-            user1.Name = "董世晨";
-            MessageBox.Show(user1.Name);
-            MessageBox.Show(user1.Name);
-            MessageBox.Show(user1.Name);
+            try
+            {
+                User Clubie = LoginServiceFactory.LoginService.Login("161810129", "Xixi");
+                MessageBox.Show(Clubie.Name);
+                MessageBox.Show(Clubie.GetType().Name);
+                User Akie = LoginServiceFactory.LoginService.Login("161810104", "DongDong");
+                MessageBox.Show(Akie.Name);
+                MessageBox.Show(Akie.GetType().Name);
+            }
+            catch (NoUserIDException)
+            {
+                MessageBox.Show("用户不存在！");
+            }
+            catch (WrongPasswordException)
+            {
+                MessageBox.Show("密码错误");
+            }
         }
     }
 }

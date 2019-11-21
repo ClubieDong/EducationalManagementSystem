@@ -8,6 +8,5 @@
         Title="MainWindow" Height="450" Width="800"
         Loaded="Window_Loaded">
     <Grid>
-        
     </Grid>
 </Window>
