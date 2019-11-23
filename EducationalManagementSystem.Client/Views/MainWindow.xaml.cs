@@ -1,5 +1,6 @@
 ﻿using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
+using EducationalManagementSystem.Client.ViewModels;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -27,27 +28,10 @@ namespace EducationalManagementSystem.Client
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                User Clubie = LoginServiceFactory.LoginService.Login("161810129", "Xixi");
-                MessageBox.Show(Clubie.Name);
-                MessageBox.Show(Clubie.GetType().Name);
-                User Akie = LoginServiceFactory.LoginService.Login("161810104", "DongDong");
-                MessageBox.Show(Akie.Name);
-                MessageBox.Show(Akie.GetType().Name);
-            }
-            catch (NoUserIDException)
-            {
-                MessageBox.Show("用户不存在！");
-            }
-            catch (WrongPasswordException)
-            {
-                MessageBox.Show("密码错误");
-            }
+            var vm = (MainWindowViewModel)DataContext;
+            vm.LoginVM = (LoginViewModel)loginView.DataContext;
+            vm.ViewPersonalInfoVM = (ViewPersonalInfoViewModel)viewPersonalInfoView.DataContext;
+            vm.ChangePasswordVM = (ChangePasswordViewModel)changePasswordView.DataContext;
         }
     }
 }

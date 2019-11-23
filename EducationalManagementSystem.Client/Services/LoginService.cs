@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MySql.Data;
 using System.Data;
 using MySql.Data.MySqlClient;
+using EducationalManagementSystem.Client.Services.Exceptions;
 
 namespace EducationalManagementSystem.Client.Services
 {
@@ -15,9 +16,6 @@ namespace EducationalManagementSystem.Client.Services
     {
         User Login(string userID, string password);
     }
-
-    public class NoUserIDException : ApplicationException { }
-    public class WrongPasswordException : ApplicationException { }
 
     public class LoginServiceFactory
     {

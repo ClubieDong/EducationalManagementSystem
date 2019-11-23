@@ -17,23 +17,25 @@ using System.Windows.Shapes;
 namespace EducationalManagementSystem.Client.Views
 {
     /// <summary>
-    /// LoginView.xaml 的交互逻辑
+    /// ChangePasswordView.xaml 的交互逻辑
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class ChangePasswordView : UserControl
     {
-        public LoginView()
+        public ChangePasswordView()
         {
             InitializeComponent();
         }
 
         private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var vm = (LoginViewModel)DataContext;
+            var vm = (ChangePasswordViewModel)DataContext;
             if (Visibility == Visibility.Visible)
                 vm.Show();
             else
             {
-                pwd.Password = string.Empty;
+                oldPwd.Password = string.Empty;
+                newPwd.Password = string.Empty;
+                confirmPwd.Password = string.Empty;
                 vm.Hide();
             }
         }

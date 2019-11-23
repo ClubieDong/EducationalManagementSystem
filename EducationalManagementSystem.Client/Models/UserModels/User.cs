@@ -19,6 +19,12 @@ namespace EducationalManagementSystem.Client.Models.UserModels
             return result;
         }
 
+        public enum GenderType
+        {
+            Male,
+            Female
+        }
+
         private string _UserID;
         public string UserID
         {
@@ -31,6 +37,12 @@ namespace EducationalManagementSystem.Client.Models.UserModels
         {
             get => (string)DataServiceFactory.DataService.GetValue(this, typeof(User).GetProperty(nameof(Name)));
             set => DataServiceFactory.DataService.SetValue(this, typeof(User).GetProperty(nameof(Name)), value);
+        }
+        private GenderType? _Gender;
+        public GenderType? Gender
+        {
+            get => (GenderType)DataServiceFactory.DataService.GetValue(this, typeof(User).GetProperty(nameof(Gender)));
+            set => DataServiceFactory.DataService.SetValue(this, typeof(User).GetProperty(nameof(Gender)), value);
         }
     }
 }

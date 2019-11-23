@@ -7,6 +7,7 @@ using MySql.Data.MySqlClient;
 using System.IO;
 using System.Reflection;
 using EducationalManagementSystem.Client.Models;
+using EducationalManagementSystem.Client.Models.UserModels;
 
 namespace EducationalManagementSystem.Client.Services
 {
@@ -44,10 +45,12 @@ namespace EducationalManagementSystem.Client.Services
         {
             { typeof(uint?), MySqlDbType.UInt32 },
             { typeof(string), MySqlDbType.Text },
+            { typeof(User.GenderType?), MySqlDbType.Int32 },
         };
 
         public object GetValue(ObjectWithID obj, PropertyInfo property)
         {
+            Console.WriteLine($"GetValue(obj:{obj},property:{property}");
             var type = property.DeclaringType;
             var field = type.GetField($"_{property.Name}", BindingFlags.NonPublic | BindingFlags.Instance);
             if (obj.ID.HasValue && field.GetValue(obj) == null)
@@ -57,7 +60,13 @@ namespace EducationalManagementSystem.Client.Services
                     using (var reader = cmd.ExecuteReader())
                     {
                         reader.Read();
-                        field.SetValue(obj, reader[0]);
+                        if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(Nullable<>) && field.FieldType.GenericTypeArguments[0].IsEnum)
+                        {
+                            var e = Enum.Parse(field.FieldType.GenericTypeArguments[0], (string)reader[0]);
+                            field.SetValue(obj, e);
+                        }
+                        else
+                            field.SetValue(obj, reader[0]);
                     }
                 }
             return field.GetValue(obj);
@@ -65,6 +74,7 @@ namespace EducationalManagementSystem.Client.Services
 
         public void SetValue(ObjectWithID obj, PropertyInfo property, object value)
         {
+            Console.WriteLine($"SetValue(obj:{obj},property:{property},value:{value}");
             var type = property.DeclaringType;
             var field = type.GetField($"_{property.Name}", BindingFlags.NonPublic | BindingFlags.Instance);
             if (field.GetValue(obj) == value)

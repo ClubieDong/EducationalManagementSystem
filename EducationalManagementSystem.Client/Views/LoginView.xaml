@@ -4,7 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EducationalManagementSystem.Client.Views"
-             mc:Ignorable="d">
+             xmlns:viewmodels="clr-namespace:EducationalManagementSystem.Client.ViewModels"
+             mc:Ignorable="d" IsVisibleChanged="VisibilityChanged">
+    <UserControl.DataContext>
+        <viewmodels:LoginViewModel/>
+    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -13,23 +17,26 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="用户名：" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="0" Grid.Column="2" Padding="5" Text="{Binding UserID}"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="密码：" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <PasswordBox x:Name="pwd" Grid.Row="2" Grid.Column="2" Padding="5"/>
-        <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="教务管理系统" FontSize="20" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="用户名：" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Padding="5" Text="{Binding UserID}"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="密码：" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <PasswordBox x:Name="pwd" Grid.Row="4" Grid.Column="2" Padding="5"/>
+        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="忘记密码？" VerticalAlignment="Center" ToolTip="请在线下找管理员重置密码。" ToolTipService.Placement="Top" ToolTipService.InitialShowDelay="0"/>
-            <Button Grid.Column="2" Content="登录" Padding="5" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=pwd}"/>
+            <TextBlock Grid.Column="0" Text="忘记密码？" VerticalAlignment="Center" TextDecorations="Underline" ToolTip="请在线下找管理员重置密码。" ToolTipService.Placement="Top" ToolTipService.InitialShowDelay="0"/>
+            <Button Grid.Column="2" Content="登录" Padding="20, 5" IsDefault="True" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=pwd}"/>
         </Grid>
     </Grid>
 </UserControl>

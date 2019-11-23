@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:EducationalManagementSystem.Client"
              StartupUri="Views/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="Resources/Converters.xaml"/>
     </Application.Resources>
 </Application>

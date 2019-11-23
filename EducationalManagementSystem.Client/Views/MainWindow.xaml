@@ -4,9 +4,102 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EducationalManagementSystem.Client"
+        xmlns:views="clr-namespace:EducationalManagementSystem.Client.Views"
+        xmlns:viewmodels="clr-namespace:EducationalManagementSystem.Client.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
-        Loaded="Window_Loaded">
+        x:Name ="mainWindow" Title="教务管理系统  By Clubie" MinHeight="600" MinWidth="800" Height="750" Width="1000">
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
+        <views:LoginView x:Name="loginView" Width="200" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <views:LoginView.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="Login">
+                            <Setter Property="UIElement.Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                </Style>
+            </views:LoginView.Style>
+        </views:LoginView>
+        <DockPanel>
+            <DockPanel.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="Login">
+                            <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DockPanel.Style>
+            <Grid DockPanel.Dock="Top" Background="LightCyan">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="1" Text="教务管理系统" FontSize="20" Margin="0,15"/>
+                <TextBlock Grid.Column="3" Text="{Binding User.Name, StringFormat=欢迎，{0:C}！}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="5" Text="退出登录" VerticalAlignment="Center" TextDecorations="Underline" Cursor="Hand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseUp">
+                            <i:InvokeCommandAction Command="{Binding LogoutCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBlock>
+            </Grid>
+            <Grid DockPanel.Dock="Left" Width="300" Background="AliceBlue">
+                <StackPanel Margin="0,40">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="Button.IsEnabled" Value="False">
+                                    <Setter Property="Button.Visibility" Value="Collapsed"/>
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Margin" Value="30,10"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="FontSize" Value="15"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="查询个人信息" Command="{Binding ViewPersonalInfoCommand}"/>
+                    <Button Content="修改个人信息" Command="{Binding EditPersonalInfoCommand}"/>
+                    <Button Content="修改密码" Command="{Binding ChangePasswordCommand}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Margin="30">
+                <views:ViewPersonalInfoView x:Name="viewPersonalInfoView">
+                    <views:ViewPersonalInfoView.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="ViewPersonalInfo">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                            <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                        </Style>
+                    </views:ViewPersonalInfoView.Style>
+                </views:ViewPersonalInfoView>
+                <views:ChangePasswordView x:Name="changePasswordView">
+                    <views:ChangePasswordView.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="ChangePassword">
+                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                            <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                        </Style>
+                    </views:ChangePasswordView.Style>
+                </views:ChangePasswordView>
+            </Grid>
+        </DockPanel>
     </Grid>
 </Window>
