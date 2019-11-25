@@ -7,6 +7,7 @@
         xmlns:views="clr-namespace:EducationalManagementSystem.Client.Views"
         xmlns:viewmodels="clr-namespace:EducationalManagementSystem.Client.ViewModels"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.ViewModels.ValueConverters"
         mc:Ignorable="d"
         x:Name ="mainWindow" Title="教务管理系统  By Clubie" MinHeight="600" MinWidth="800" Height="750" Width="1000">
     <Window.DataContext>
@@ -59,11 +60,6 @@
                 <StackPanel Margin="0,40">
                     <StackPanel.Resources>
                         <Style TargetType="Button">
-                            <Style.Triggers>
-                                <Trigger Property="Button.IsEnabled" Value="False">
-                                    <Setter Property="Button.Visibility" Value="Collapsed"/>
-                                </Trigger>
-                            </Style.Triggers>
                             <Setter Property="Margin" Value="30,10"/>
                             <Setter Property="Padding" Value="5"/>
                             <Setter Property="FontSize" Value="15"/>

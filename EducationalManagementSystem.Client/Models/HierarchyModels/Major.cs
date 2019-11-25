@@ -1,6 +1,8 @@
-﻿using EducationalManagementSystem.Client.Services;
+﻿using EducationalManagementSystem.Client.Models.CourseModels;
+using EducationalManagementSystem.Client.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,6 +70,17 @@ namespace EducationalManagementSystem.Client.Models.HierarchyModels
                 if (!ID.HasValue)
                     return;
                 DataServiceFactory.DataService.SetValue(this, nameof(Name), value);
+            }
+        }
+
+        private ObservableCollection<Course> _CourseList;
+        public ObservableCollection<Course> CourseList
+        {
+            get
+            {
+                if (ID.HasValue && _CourseList == null)
+                    _CourseList = (ObservableCollection<Course>)DataServiceFactory.DataService.GetList(this, nameof(CourseList));
+                return _CourseList;
             }
         }
     }

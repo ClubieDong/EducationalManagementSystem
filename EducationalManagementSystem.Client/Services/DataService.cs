@@ -16,9 +16,10 @@ namespace EducationalManagementSystem.Client.Services
     public interface IDataService
     {
         object GetValue(ObjectWithID obj, string propertyName);
-        object GetRelation(ObjectWithID obj, string propertyName);
         void SetValue(ObjectWithID obj, string propertyName, object value);
         ObjectWithID NewObject(Type type);
+        object GetList(ObjectWithID obj, string propertyName);
+        object GetDictionary(ObjectWithID obj, string propertyName);
     }
 
     public class DataServiceFactory
@@ -46,6 +47,7 @@ namespace EducationalManagementSystem.Client.Services
         private static readonly Dictionary<Type, MySqlDbType> _TypeToDbType = new Dictionary<Type, MySqlDbType>()
         {
             { typeof(uint?), MySqlDbType.UInt32 },
+            { typeof(double?), MySqlDbType.Double },
             { typeof(string), MySqlDbType.Text },
             { typeof(DateTime?), MySqlDbType.DateTime },
         };
@@ -83,7 +85,7 @@ namespace EducationalManagementSystem.Client.Services
             var propertyType = property.PropertyType;
             using (var cmd = Connection.CreateCommand())
             {
-                cmd.CommandText = $"UPDATE {propertyType.Name} SET {property.Name} = @Value WHERE ID = {obj.ID}";
+                cmd.CommandText = $"UPDATE {declaringType.Name} SET {property.Name} = @Value WHERE ID = {obj.ID}";
                 // ObjectWithID子类
                 if (value is ObjectWithID data)
                 {
@@ -130,6 +132,7 @@ namespace EducationalManagementSystem.Client.Services
             }
             var tempType = type;
             while (tempType != baseType)
+            {
                 using (var cmd = Connection.CreateCommand())
                 {
                     cmd.CommandText = $"INSERT INTO {tempType.Name} (ID) VALUES (@ID)";
@@ -137,24 +140,25 @@ namespace EducationalManagementSystem.Client.Services
                     cmd.Parameters["@ID"].Value = id;
                     cmd.ExecuteNonQuery();
                 }
+                tempType = tempType.BaseType;
+            }
             return ObjectWithID.GetByID(id, type.GUID);
         }
 
-        public object GetRelation(ObjectWithID obj, string propertyName)
+        public object GetList(ObjectWithID obj, string propertyName)
         {
-            var property = obj.GetType().GetProperty(propertyName);
             var objType = obj.GetType();
+            var property = objType.GetProperty(propertyName);
             var propertyType = property.PropertyType;
-            var innerType = propertyType.GenericTypeArguments[0];
-            foreach (var relatedProperty in innerType.GetProperties())
+            var relatedType = propertyType.GenericTypeArguments[0];
+            foreach (var relatedProperty in relatedType.GetProperties())
             {
                 var relatedPropertyType = relatedProperty.PropertyType;
                 // 多对1
                 if (relatedPropertyType == objType)
-                {
                     using (var cmd = Connection.CreateCommand())
                     {
-                        cmd.CommandText = $"SELECT ID FROM {innerType.Name} WHERE {relatedProperty.Name} = {obj.ID}";
+                        cmd.CommandText = $"SELECT ID FROM {relatedType.Name} WHERE {relatedProperty.Name} = {obj.ID}";
                         using (var reader = cmd.ExecuteReader())
                         {
                             var result = propertyType.GetConstructor(Type.EmptyTypes).Invoke(null);
@@ -162,18 +166,45 @@ namespace EducationalManagementSystem.Client.Services
                             while (reader.Read())
                             {
                                 var id = (uint)reader[0];
-                                var data = ObjectWithID.GetByID(id, innerType.GUID);
+                                var data = ObjectWithID.GetByID(id, relatedType.GUID);
                                 addFunc.Invoke(result, new object[] { data });
                             }
                             return result;
                         }
                     }
-                }
                 // 多对多
                 if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(ObservableCollection<>) && relatedPropertyType.GenericTypeArguments[0] == objType)
-                    throw new NotImplementedException();
+                    using (var cmd = Connection.CreateCommand())
+                    {
+                        var first = objType.Name;
+                        var second = relatedType.Name;
+                        if (string.Compare(first, second) > 0)
+                        {
+                            var temp = first;
+                            first = second;
+                            second = temp;
+                        }
+                        cmd.CommandText = $"SELECT {relatedType.Name}ID FROM {first}_{second} WHERE {objType.Name} = {obj.ID}";
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            var result = propertyType.GetConstructor(Type.EmptyTypes).Invoke(null);
+                            var addFunc = propertyType.GetMethod("Add");
+                            while (reader.Read())
+                            {
+                                var id = (uint)reader[0];
+                                var data = ObjectWithID.GetByID(id, relatedType.GUID);
+                                addFunc.Invoke(result, new object[] { data });
+                            }
+                            return result;
+                        }
+                    }
             }
             throw new ReflectionException();
+        }
+
+        public object GetDictionary(ObjectWithID obj, string propertyName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

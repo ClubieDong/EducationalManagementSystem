@@ -22,10 +22,20 @@
                 </Style>
                 <valueconverters:VisibilityConverter x:Key="StudentConverter" Type="{x:Type usermodels:Student}"/>
                 <valueconverters:VisibilityConverter x:Key="UndergraduateConverter" Type="{x:Type usermodels:Undergraduate}"/>
+                <valueconverters:VisibilityConverter x:Key="PostgraduateConverter" Type="{x:Type usermodels:Postgraduate}"/>
+                <valueconverters:VisibilityConverter x:Key="AdministratorConverter" Type="{x:Type usermodels:Administrator}"/>
+                <valueconverters:VisibilityConverter x:Key="CollegeAdministratorConverter" Type="{x:Type usermodels:CollegeAdministrator}"/>
+                <valueconverters:VisibilityConverter x:Key="TeacherConverter" Type="{x:Type usermodels:Teacher}"/>
             </StackPanel.Resources>
             <GroupBox Header="用户信息：">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="10"/>
                         <RowDefinition Height="Auto"/>
@@ -50,14 +60,20 @@
                     <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding User.UserID}"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="性别：" HorizontalAlignment="Right"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding User.Gender, Converter={StaticResource GenderConverter}}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="出生日期：" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding User.BirthDate, StringFormat={}{0:yyyy年M月d日}}"/>
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="政治面貌：" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding User.PoliticsStatus}"/>
-                    <TextBlock Grid.Row="10" Grid.Column="0" Text="联系电话：" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding User.Telephone}"/>
-                    <TextBlock Grid.Row="12" Grid.Column="0" Text="家庭住址：" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Row="12" Grid.Column="1" Text="{Binding User.Address}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="身份证号：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding User.IDNumber}"/>
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="出生日期：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding User.BirthDate, StringFormat={}{0:yyyy年M月d日}}"/>
+                    <TextBlock Grid.Row="10" Grid.Column="0" Text="政治面貌：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding User.PoliticsStatus}"/>
+                    <TextBlock Grid.Row="12" Grid.Column="0" Text="民族：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="12" Grid.Column="1" Text="{Binding User.Nation}"/>
+                    <TextBlock Grid.Row="14" Grid.Column="0" Text="籍贯：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="14" Grid.Column="1" Text="{Binding User.NativePlace}"/>
+                    <TextBlock Grid.Row="16" Grid.Column="0" Text="联系电话：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="16" Grid.Column="1" Text="{Binding User.Telephone}"/>
+                    <TextBlock Grid.Row="18" Grid.Column="0" Text="家庭住址：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="18" Grid.Column="1" Text="{Binding User.Address}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="学生信息：" Visibility="{Binding Path=User, Converter={StaticResource StudentConverter}}">
@@ -88,6 +104,74 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="班级：" HorizontalAlignment="Right"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.Class}"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="研究生信息：" Visibility="{Binding Path=User, Converter={StaticResource PostgraduateConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="导师：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.Tutor.Name}"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="管理员信息：" Visibility="{Binding Path=User, Converter={StaticResource AdministratorConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="月薪：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.MonthlySalary}"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="院级管理员信息：" Visibility="{Binding Path=User, Converter={StaticResource CollegeAdministratorConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="学院：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.College.Name}"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="老师信息：" Visibility="{Binding Path=User, Converter={StaticResource TeacherConverter}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="月薪：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.MonthlySalary}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="课时费：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding User.SalaryPerClass}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="专业：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding User.Major.Name}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="学历：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding User.EducationBackground}"/>
+                    <TextBlock Grid.Row="8" Grid.Column="0" Text="毕业学校：" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding User.GraduateSchool}"/>
                 </Grid>
             </GroupBox>
         </StackPanel>

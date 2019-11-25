@@ -75,6 +75,26 @@ namespace EducationalManagementSystem.Client.Models.UserModels
             }
         }
 
+        private string _IDNumber;
+        public string IDNumber
+        {
+            get
+            {
+                if (ID.HasValue && _IDNumber == null)
+                    _IDNumber = (string)DataServiceFactory.DataService.GetValue(this, nameof(IDNumber));
+                return _IDNumber;
+            }
+            set
+            {
+                if (_IDNumber == value)
+                    return;
+                _IDNumber = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(IDNumber), value);
+            }
+        }
+
         private DateTime? _BirthDate;
         public DateTime? BirthDate
         {
@@ -112,6 +132,46 @@ namespace EducationalManagementSystem.Client.Models.UserModels
                 if (!ID.HasValue)
                     return;
                 DataServiceFactory.DataService.SetValue(this, nameof(PoliticsStatus), value);
+            }
+        }
+
+        private string _Nation;
+        public string Nation
+        {
+            get
+            {
+                if (ID.HasValue && _Nation == null)
+                    _Nation = (string)DataServiceFactory.DataService.GetValue(this, nameof(Nation));
+                return _Nation;
+            }
+            set
+            {
+                if (_Nation == value)
+                    return;
+                _Nation = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Nation), value);
+            }
+        }
+
+        private string _NativePlace;
+        public string NativePlace
+        {
+            get
+            {
+                if (ID.HasValue && _NativePlace == null)
+                    _NativePlace = (string)DataServiceFactory.DataService.GetValue(this, nameof(NativePlace));
+                return _NativePlace;
+            }
+            set
+            {
+                if (_NativePlace == value)
+                    return;
+                _NativePlace = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(NativePlace), value);
             }
         }
 

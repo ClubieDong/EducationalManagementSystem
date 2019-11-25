@@ -13,6 +13,7 @@ namespace EducationalManagementSystem.Client.Services
     public interface IChangePasswordService
     {
         void ChangePassword(User user, string oldPassword, string newPassword);
+        void ResetPassword(User user);
     }
 
     public class ChangePasswordServiceFactory
@@ -42,6 +43,20 @@ namespace EducationalManagementSystem.Client.Services
             // 修改密码
             bytes = Encoding.UTF8.GetBytes(newPassword);
             sha256 = SHA256.Create().ComputeHash(bytes);
+            using (var cmd = DatabaseDataService.Connection.CreateCommand())
+            {
+                cmd.CommandText = $"UPDATE User SET Password = @Password WHERE ID = {user.ID}";
+                cmd.Parameters.Add("@Password", MySqlDbType.Binary);
+                cmd.Parameters["@Password"].Value = sha256;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void ResetPassword(User user)
+        {
+            var password = user.UserID;
+            var bytes = Encoding.UTF8.GetBytes(password);
+            var sha256 = SHA256.Create().ComputeHash(bytes);
             using (var cmd = DatabaseDataService.Connection.CreateCommand())
             {
                 cmd.CommandText = $"UPDATE User SET Password = @Password WHERE ID = {user.ID}";

@@ -58,7 +58,7 @@ namespace EducationalManagementSystem.Client.Models.HierarchyModels
             get
             {
                 if (ID.HasValue && _MajorList == null)
-                    _MajorList = (ObservableCollection<Major>)DataServiceFactory.DataService.GetRelation(this, nameof(MajorList));
+                    _MajorList = (ObservableCollection<Major>)DataServiceFactory.DataService.GetList(this, nameof(MajorList));
                 return _MajorList;
             }
         }
