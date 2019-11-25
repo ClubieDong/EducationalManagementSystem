@@ -29,11 +29,6 @@ namespace EducationalManagementSystem.Client
     {
         public MainWindow()
         {
-            var Clubie = (Undergraduate)LoginServiceFactory.LoginService.Login("161810129", "Xixi");
-            Console.WriteLine(Clubie.Class);
-            Console.WriteLine(Clubie.Major.Name);
-            Console.WriteLine(Clubie.Major.College.MajorList.Count);
-
             InitializeComponent();
             var vm = (MainWindowViewModel)DataContext;
             vm.LoginVM = (LoginViewModel)loginView.DataContext;

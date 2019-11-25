@@ -105,6 +105,7 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ValueConverters\GenderConverter.cs" />
     <Compile Include="ViewModels\ValueConverters\PasswordBoxesConverter.cs" />
+    <Compile Include="ViewModels\ValueConverters\VisibilityConverter.cs" />
     <Compile Include="ViewModels\ViewPersonalInfoViewModel.cs" />
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
