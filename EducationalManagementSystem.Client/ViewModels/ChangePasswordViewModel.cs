@@ -58,8 +58,5 @@ namespace EducationalManagementSystem.Client.ViewModels
             }
         }
         public bool CanChangePassword(PasswordBox[] passwordBoxes) => true;
-
-        public void Show() { }
-        public void Hide() { }
     }
 }

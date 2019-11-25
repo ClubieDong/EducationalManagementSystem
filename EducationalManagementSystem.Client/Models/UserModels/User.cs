@@ -7,17 +7,7 @@ namespace EducationalManagementSystem.Client.Models.UserModels
 {
     public abstract class User : ObjectWithID
     {
-        private static readonly Dictionary<uint, User> _UserList = new Dictionary<uint, User>();
-        public static User GetByID(uint id, Guid guid)
-        {
-            if (_UserList.TryGetValue(id, out User result))
-                return result;
-            var type = _GuidToType[guid];
-            result = (User)type.GetConstructor(Type.EmptyTypes).Invoke(null);
-            result.ID = id;
-            _UserList.Add(id, result);
-            return result;
-        }
+        public static Dictionary<uint, User> UserList { get; } = new Dictionary<uint, User>();
 
         public enum GenderType
         {
@@ -28,21 +18,141 @@ namespace EducationalManagementSystem.Client.Models.UserModels
         private string _UserID;
         public string UserID
         {
-            get => (string)DataServiceFactory.DataService.GetValue(this, typeof(User).GetProperty(nameof(UserID)));
-            set => DataServiceFactory.DataService.SetValue(this, typeof(User).GetProperty(nameof(UserID)), value);
+            get
+            {
+                if (ID.HasValue && _UserID == null)
+                    _UserID = (string)DataServiceFactory.DataService.GetValue(this, nameof(UserID));
+                return _UserID;
+            }
+            set
+            {
+                if (_UserID == value)
+                    return;
+                _UserID = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(UserID), value);
+            }
         }
 
         private string _Name;
         public string Name
         {
-            get => (string)DataServiceFactory.DataService.GetValue(this, typeof(User).GetProperty(nameof(Name)));
-            set => DataServiceFactory.DataService.SetValue(this, typeof(User).GetProperty(nameof(Name)), value);
+            get
+            {
+                if (ID.HasValue && _Name == null)
+                    _Name = (string)DataServiceFactory.DataService.GetValue(this, nameof(Name));
+                return _Name;
+            }
+            set
+            {
+                if (_Name == value)
+                    return;
+                _Name = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Name), value);
+            }
         }
+
         private GenderType? _Gender;
         public GenderType? Gender
         {
-            get => (GenderType)DataServiceFactory.DataService.GetValue(this, typeof(User).GetProperty(nameof(Gender)));
-            set => DataServiceFactory.DataService.SetValue(this, typeof(User).GetProperty(nameof(Gender)), value);
+            get
+            {
+                if (ID.HasValue && _Gender == null)
+                    _Gender = (GenderType)DataServiceFactory.DataService.GetValue(this, nameof(Gender));
+                return _Gender;
+            }
+            set
+            {
+                if (_Gender == value)
+                    return;
+                _Gender = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Gender), value);
+            }
+        }
+
+        private DateTime? _BirthDate;
+        public DateTime? BirthDate
+        {
+            get
+            {
+                if (ID.HasValue && _BirthDate == null)
+                    _BirthDate = (DateTime)DataServiceFactory.DataService.GetValue(this, nameof(BirthDate));
+                return _BirthDate;
+            }
+            set
+            {
+                if (_BirthDate == value)
+                    return;
+                _BirthDate = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(BirthDate), value);
+            }
+        }
+
+        private string _PoliticsStatus;
+        public string PoliticsStatus
+        {
+            get
+            {
+                if (ID.HasValue && _PoliticsStatus == null)
+                    _PoliticsStatus = (string)DataServiceFactory.DataService.GetValue(this, nameof(PoliticsStatus));
+                return _PoliticsStatus;
+            }
+            set
+            {
+                if (_PoliticsStatus == value)
+                    return;
+                _PoliticsStatus = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(PoliticsStatus), value);
+            }
+        }
+
+        private string _Telephone;
+        public string Telephone
+        {
+            get
+            {
+                if (ID.HasValue && _Telephone == null)
+                    _Telephone = (string)DataServiceFactory.DataService.GetValue(this, nameof(Telephone));
+                return _Telephone;
+            }
+            set
+            {
+                if (_Telephone == value)
+                    return;
+                _Telephone = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Telephone), value);
+            }
+        }
+
+        private string _Address;
+        public string Address
+        {
+            get
+            {
+                if (ID.HasValue && _Address == null)
+                    _Address = (string)DataServiceFactory.DataService.GetValue(this, nameof(Address));
+                return _Address;
+            }
+            set
+            {
+                if (_Address == value)
+                    return;
+                _Address = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Address), value);
+            }
         }
     }
 }

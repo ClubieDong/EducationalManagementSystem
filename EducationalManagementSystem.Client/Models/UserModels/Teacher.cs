@@ -13,13 +13,9 @@ namespace EducationalManagementSystem.Client.Models.UserModels
 
     public class Lecturer : Teacher
     {
-        public Lecturer() { }
-        public Lecturer(uint id) => ID = id;
     }
 
     public class Professor : Teacher
     {
-        public Professor() { }
-        public Professor(uint id) => ID = id;
     }
 }

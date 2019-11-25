@@ -8,15 +8,17 @@ using System.IO;
 using System.Reflection;
 using EducationalManagementSystem.Client.Models;
 using EducationalManagementSystem.Client.Models.UserModels;
+using System.Collections.ObjectModel;
+using EducationalManagementSystem.Client.Services.Exceptions;
 
 namespace EducationalManagementSystem.Client.Services
 {
     public interface IDataService
     {
-        object GetValue(ObjectWithID obj, PropertyInfo property);
-        void SetValue(ObjectWithID obj, PropertyInfo property, object value);
+        object GetValue(ObjectWithID obj, string propertyName);
+        object GetRelation(ObjectWithID obj, string propertyName);
+        void SetValue(ObjectWithID obj, string propertyName, object value);
         ObjectWithID NewObject(Type type);
-        void RemoveObject(ObjectWithID obj);
     }
 
     public class DataServiceFactory
@@ -45,81 +47,133 @@ namespace EducationalManagementSystem.Client.Services
         {
             { typeof(uint?), MySqlDbType.UInt32 },
             { typeof(string), MySqlDbType.Text },
-            { typeof(User.GenderType?), MySqlDbType.Int32 },
+            { typeof(DateTime?), MySqlDbType.DateTime },
         };
 
-        public object GetValue(ObjectWithID obj, PropertyInfo property)
+        public object GetValue(ObjectWithID obj, string propertyName)
         {
-            Console.WriteLine($"GetValue(obj:{obj},property:{property}");
-            var type = property.DeclaringType;
-            var field = type.GetField($"_{property.Name}", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (obj.ID.HasValue && field.GetValue(obj) == null)
-                using (var cmd = Connection.CreateCommand())
-                {
-                    cmd.CommandText = $"SELECT {property.Name} FROM {type.Name} WHERE ID = {obj.ID}";
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        reader.Read();
-                        if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(Nullable<>) && field.FieldType.GenericTypeArguments[0].IsEnum)
-                        {
-                            var e = Enum.Parse(field.FieldType.GenericTypeArguments[0], (string)reader[0]);
-                            field.SetValue(obj, e);
-                        }
-                        else
-                            field.SetValue(obj, reader[0]);
-                    }
-                }
-            return field.GetValue(obj);
-        }
-
-        public void SetValue(ObjectWithID obj, PropertyInfo property, object value)
-        {
-            Console.WriteLine($"SetValue(obj:{obj},property:{property},value:{value}");
-            var type = property.DeclaringType;
-            var field = type.GetField($"_{property.Name}", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (field.GetValue(obj) == value)
-                return;
-            field.SetValue(obj, value);
-            if (!obj.ID.HasValue)
-                return;
+            var property = obj.GetType().GetProperty(propertyName);
+            var declaringType = property.DeclaringType;
+            var propertyType = property.PropertyType;
             using (var cmd = Connection.CreateCommand())
             {
-                cmd.CommandText = $"UPDATE {type.Name} SET {property.Name} = @Value WHERE ID = {obj.ID}";
-                cmd.Parameters.Add("@Value", _TypeToDbType[property.PropertyType]);
-                cmd.Parameters["@Value"].Value = value;
+                cmd.CommandText = $"SELECT {propertyName} FROM {declaringType.Name} WHERE ID = {obj.ID}";
+                using (var reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    // ObjectWithID子类
+                    if (propertyType.IsSubclassOf(typeof(ObjectWithID)))
+                    {
+                        var id = (uint)reader[0];
+                        return ObjectWithID.GetByID(id, propertyType.GUID);
+                    }
+                    // Nullable<Enum>
+                    if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) && propertyType.GenericTypeArguments[0].IsEnum)
+                        return Enum.Parse(propertyType.GenericTypeArguments[0], (string)reader[0]);
+                    // 一般类型
+                    return reader[0];
+                }
+            }
+        }
+
+        public void SetValue(ObjectWithID obj, string propertyName, object value)
+        {
+            var property = obj.GetType().GetProperty(propertyName);
+            var declaringType = property.DeclaringType;
+            var propertyType = property.PropertyType;
+            using (var cmd = Connection.CreateCommand())
+            {
+                cmd.CommandText = $"UPDATE {propertyType.Name} SET {property.Name} = @Value WHERE ID = {obj.ID}";
+                // ObjectWithID子类
+                if (value is ObjectWithID data)
+                {
+                    cmd.Parameters.Add("@Value", MySqlDbType.UInt32);
+                    cmd.Parameters["@Value"].Value = data.ID;
+                }
+                // Nullable<Enum>
+                else if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>) && propertyType.GenericTypeArguments[0].IsEnum)
+                {
+                    cmd.Parameters.Add("@Value", MySqlDbType.Text);
+                    cmd.Parameters["@Value"].Value = value.ToString();
+                }
+                // 一般类型
+                else
+                {
+                    cmd.Parameters.Add("@Value", _TypeToDbType[property.PropertyType]);
+                    cmd.Parameters["@Value"].Value = value;
+                }
                 cmd.ExecuteNonQuery();
             }
         }
 
         public ObjectWithID NewObject(Type type)
         {
-            Type baseType = type;
+            var baseType = type;
             while (baseType.BaseType != typeof(ObjectWithID))
                 baseType = baseType.BaseType;
             using (var cmd = Connection.CreateCommand())
             {
                 cmd.CommandText = $"INSERT INTO {baseType.Name} (Type) VALUES (@Type)";
-                cmd.Parameters.Add("@Type", MySqlDbType.Guid);
-                cmd.Parameters["@Type"].Value = type.GUID;
+                cmd.Parameters.Add("@Type", MySqlDbType.Binary);
+                cmd.Parameters["@Type"].Value = type.GUID.ToByteArray();
                 cmd.ExecuteNonQuery();
             }
+            uint id;
             using (var cmd = Connection.CreateCommand())
             {
                 cmd.CommandText = $"SELECT LAST_INSERT_ID()";
                 using (var reader = cmd.ExecuteReader())
                 {
                     reader.Read();
-                    var types = new Type[] { typeof(uint) };
-                    var paras = new object[] { reader[0] };
-                    var result = (ObjectWithID)type.GetConstructor(types).Invoke(paras);
-                    return result;
+                    id = (uint)(ulong)reader[0];
                 }
             }
+            var tempType = type;
+            while (tempType != baseType)
+                using (var cmd = Connection.CreateCommand())
+                {
+                    cmd.CommandText = $"INSERT INTO {tempType.Name} (ID) VALUES (@ID)";
+                    cmd.Parameters.Add("@ID", MySqlDbType.UInt32);
+                    cmd.Parameters["@ID"].Value = id;
+                    cmd.ExecuteNonQuery();
+                }
+            return ObjectWithID.GetByID(id, type.GUID);
         }
 
-        public void RemoveObject(ObjectWithID obj)
+        public object GetRelation(ObjectWithID obj, string propertyName)
         {
-            throw new NotImplementedException();
+            var property = obj.GetType().GetProperty(propertyName);
+            var objType = obj.GetType();
+            var propertyType = property.PropertyType;
+            var innerType = propertyType.GenericTypeArguments[0];
+            foreach (var relatedProperty in innerType.GetProperties())
+            {
+                var relatedPropertyType = relatedProperty.PropertyType;
+                // 多对1
+                if (relatedPropertyType == objType)
+                {
+                    using (var cmd = Connection.CreateCommand())
+                    {
+                        cmd.CommandText = $"SELECT ID FROM {innerType.Name} WHERE {relatedProperty.Name} = {obj.ID}";
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            var result = propertyType.GetConstructor(Type.EmptyTypes).Invoke(null);
+                            var addFunc = propertyType.GetMethod("Add");
+                            while (reader.Read())
+                            {
+                                var id = (uint)reader[0];
+                                var data = ObjectWithID.GetByID(id, innerType.GUID);
+                                addFunc.Invoke(result, new object[] { data });
+                            }
+                            return result;
+                        }
+                    }
+                }
+                // 多对多
+                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(ObservableCollection<>) && relatedPropertyType.GenericTypeArguments[0] == objType)
+                    throw new NotImplementedException();
+            }
+            throw new ReflectionException();
         }
     }
 }

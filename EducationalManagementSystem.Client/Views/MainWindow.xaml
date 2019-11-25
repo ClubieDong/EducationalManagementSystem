@@ -13,7 +13,7 @@
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <views:LoginView x:Name="loginView" Width="200" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <views:LoginView x:Name="loginView" VerticalAlignment="Center" HorizontalAlignment="Center">
             <views:LoginView.Style>
                 <Style>
                     <Style.Triggers>
@@ -74,7 +74,7 @@
                     <Button Content="修改密码" Command="{Binding ChangePasswordCommand}"/>
                 </StackPanel>
             </Grid>
-            <Grid Margin="30">
+            <Grid>
                 <views:ViewPersonalInfoView x:Name="viewPersonalInfoView">
                     <views:ViewPersonalInfoView.Style>
                         <Style>

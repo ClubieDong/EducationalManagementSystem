@@ -12,13 +12,9 @@ namespace EducationalManagementSystem.Client.Models.UserModels
 
     public class CollegeAdministrator : Administrator
     {
-        public CollegeAdministrator() { }
-        public CollegeAdministrator(uint id) => ID = id;
     }
 
     public class UniversityAdministrator : Administrator
     {
-        public UniversityAdministrator() { }
-        public UniversityAdministrator(uint id) => ID = id;
     }
 }

@@ -1,4 +1,6 @@
-﻿using EducationalManagementSystem.Client.Models.UserModels;
+﻿using EducationalManagementSystem.Client.Models;
+using EducationalManagementSystem.Client.Models.HierarchyModels;
+using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
 using EducationalManagementSystem.Client.ViewModels;
 using MySql.Data.MySqlClient;
@@ -27,6 +29,11 @@ namespace EducationalManagementSystem.Client
     {
         public MainWindow()
         {
+            var Clubie = (Undergraduate)LoginServiceFactory.LoginService.Login("161810129", "Xixi");
+            Console.WriteLine(Clubie.Class);
+            Console.WriteLine(Clubie.Major.Name);
+            Console.WriteLine(Clubie.Major.College.MajorList.Count);
+
             InitializeComponent();
             var vm = (MainWindowViewModel)DataContext;
             vm.LoginVM = (LoginViewModel)loginView.DataContext;

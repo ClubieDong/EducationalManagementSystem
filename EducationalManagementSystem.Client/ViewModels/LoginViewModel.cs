@@ -63,11 +63,5 @@ namespace EducationalManagementSystem.Client.ViewModels
         }
         private bool CanLogin(PasswordBox passwordBox) => true;
         #endregion
-
-        public void Show() { }
-        public void Hide()
-        {
-            UserID = string.Empty;
-        }
     }
 }

@@ -28,15 +28,11 @@ namespace EducationalManagementSystem.Client.Views
 
         private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var vm = (ChangePasswordViewModel)DataContext;
-            if (Visibility == Visibility.Visible)
-                vm.Show();
-            else
+            if (Visibility != Visibility.Visible)
             {
                 oldPwd.Password = string.Empty;
                 newPwd.Password = string.Empty;
                 confirmPwd.Password = string.Empty;
-                vm.Hide();
             }
         }
     }

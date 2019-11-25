@@ -28,14 +28,8 @@ namespace EducationalManagementSystem.Client.Views
 
         private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var vm = (LoginViewModel)DataContext;
-            if (Visibility == Visibility.Visible)
-                vm.Show();
-            else
-            {
+            if (Visibility != Visibility.Visible)
                 pwd.Password = string.Empty;
-                vm.Hide();
-            }
         }
     }
 }

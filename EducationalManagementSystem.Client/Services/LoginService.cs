@@ -9,6 +9,7 @@ using MySql.Data;
 using System.Data;
 using MySql.Data.MySqlClient;
 using EducationalManagementSystem.Client.Services.Exceptions;
+using EducationalManagementSystem.Client.Models;
 
 namespace EducationalManagementSystem.Client.Services
 {
@@ -67,7 +68,7 @@ namespace EducationalManagementSystem.Client.Services
                     reader.Read();
                     var id = (uint)reader["ID"];
                     var guid = new Guid((byte[])reader["Type"]);
-                    return User.GetByID(id, guid);
+                    return (User)ObjectWithID.GetByID(id, guid);
                 }
             }
         }
