@@ -9,7 +9,7 @@
     <UserControl.DataContext>
         <viewmodels:LoginViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="10"/>
@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.ColumnSpan="3" Text="教务管理系统" FontSize="20" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="用户名：" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="2" Grid.Column="2" Padding="5" Text="{Binding UserID}"/>
+        <TextBox x:Name="txt" Grid.Row="2" Grid.Column="2" Padding="5" Text="{Binding UserID}"/>
         <TextBlock Grid.Row="4" Grid.Column="0" Text="密码：" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <PasswordBox x:Name="pwd" Grid.Row="4" Grid.Column="2" Padding="5"/>
         <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">

@@ -53,24 +53,24 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        private ObservableCollection<Student> _StudentList;
-        public ObservableCollection<Student> StudentList
+        private List<Student> _StudentList;
+        public List<Student> StudentList
         {
             get
             {
                 if (ID.HasValue && _StudentList == null)
-                    _StudentList = (ObservableCollection<Student>)DataServiceFactory.DataService.GetList(this, nameof(StudentList));
+                    _StudentList = (List<Student>)DataServiceFactory.DataService.GetList(this, nameof(StudentList));
                 return _StudentList;
             }
         }
 
-        private ObservableCollection<Lesson> _LessonList;
-        public ObservableCollection<Lesson> LessonList
+        private List<Lesson> _LessonList;
+        public List<Lesson> LessonList
         {
             get
             {
                 if (ID.HasValue && _LessonList == null)
-                    _LessonList = (ObservableCollection<Lesson>)DataServiceFactory.DataService.GetList(this, nameof(LessonList));
+                    _LessonList = (List<Lesson>)DataServiceFactory.DataService.GetList(this, nameof(LessonList));
                 return _LessonList;
             }
         }

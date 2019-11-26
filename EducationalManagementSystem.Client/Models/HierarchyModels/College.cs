@@ -52,13 +52,13 @@ namespace EducationalManagementSystem.Client.Models.HierarchyModels
             }
         }
 
-        private ObservableCollection<Major> _MajorList;
-        public ObservableCollection<Major> MajorList
+        private List<Major> _MajorList;
+        public List<Major> MajorList
         {
             get
             {
                 if (ID.HasValue && _MajorList == null)
-                    _MajorList = (ObservableCollection<Major>)DataServiceFactory.DataService.GetList(this, nameof(MajorList));
+                    _MajorList = (List<Major>)DataServiceFactory.DataService.GetList(this, nameof(MajorList));
                 return _MajorList;
             }
         }

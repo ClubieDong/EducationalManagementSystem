@@ -73,13 +73,13 @@ namespace EducationalManagementSystem.Client.Models.HierarchyModels
             }
         }
 
-        private ObservableCollection<Course> _CourseList;
-        public ObservableCollection<Course> CourseList
+        private List<Course> _CourseList;
+        public List<Course> CourseList
         {
             get
             {
                 if (ID.HasValue && _CourseList == null)
-                    _CourseList = (ObservableCollection<Course>)DataServiceFactory.DataService.GetList(this, nameof(CourseList));
+                    _CourseList = (List<Course>)DataServiceFactory.DataService.GetList(this, nameof(CourseList));
                 return _CourseList;
             }
         }

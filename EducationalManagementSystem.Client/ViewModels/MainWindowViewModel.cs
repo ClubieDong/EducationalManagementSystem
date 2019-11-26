@@ -22,6 +22,7 @@ namespace EducationalManagementSystem.Client.ViewModels
             ViewPersonalInfoCommand = new DelegateCommand(ViewPersonalInfo, CanViewPersonalInfo);
             EditPersonalInfoCommand = new DelegateCommand(EditPersonalInfo, CanEditPersonalInfo);
             ChangePasswordCommand = new DelegateCommand(ChangePassword, CanChangePassword);
+            AddCourseCommand = new DelegateCommand(AddCourse, CanAddCourse);
         }
 
         #region ViewModels
@@ -65,7 +66,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             Login,
             Default,
             ViewPersonalInfo,
-            ChangePassword
+            ChangePassword,
+            AddCourse
         }
 
         private ViewState _State = ViewState.Default;
@@ -77,7 +79,7 @@ namespace EducationalManagementSystem.Client.ViewModels
         #endregion
 
         #region User
-        private User _User = LoginServiceFactory.LoginService.Login("161810129", "Xixi");
+        private User _User = LoginServiceFactory.LoginService.Login("teacher", "teacher");
         public User User
         {
             get => _User;
@@ -125,7 +127,16 @@ namespace EducationalManagementSystem.Client.ViewModels
             State = ViewState.ChangePassword;
         }
         public bool CanChangePassword() => true;
-        #endregion 
+        #endregion
+
+        #region AddCourse
+        public ICommand AddCourseCommand { get; }
+        public void AddCourse()
+        {
+            State = ViewState.AddCourse;
+        }
+        public bool CanAddCourse() => true;
+        #endregion
         #endregion
 
         private void LoginVM_OnLoggedIn(User user)

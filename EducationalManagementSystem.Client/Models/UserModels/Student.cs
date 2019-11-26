@@ -52,13 +52,13 @@ namespace EducationalManagementSystem.Client.Models.UserModels
             }
         }
 
-        private ObservableCollection<Class> _ClassList;
-        public ObservableCollection<Class> ClassList
+        private List<Class> _ClassList;
+        public List<Class> ClassList
         {
             get
             {
                 if (ID.HasValue && _ClassList == null)
-                    _ClassList = (ObservableCollection<Class>)DataServiceFactory.DataService.GetList(this, nameof(ClassList));
+                    _ClassList = (List<Class>)DataServiceFactory.DataService.GetList(this, nameof(ClassList));
                 return _ClassList;
             }
         }

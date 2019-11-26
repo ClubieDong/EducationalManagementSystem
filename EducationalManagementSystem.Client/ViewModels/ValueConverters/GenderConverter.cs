@@ -13,18 +13,28 @@ namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var gender = (User.GenderType?)value;
-            if (!gender.HasValue)
-                return string.Empty;
-            else if (gender == User.GenderType.Male)
-                return "男";
-            else
-                return "女";
+            switch ((User.GenderType)value)
+            {
+                case User.GenderType.Male:
+                    return "男";
+                case User.GenderType.Female:
+                    return "女";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            switch ((string)value)
+            {
+                case "男":
+                    return User.GenderType.Male;
+                case "女":
+                    return User.GenderType.Female;
+                default:
+                    return null;
+            }
         }
     }
 }

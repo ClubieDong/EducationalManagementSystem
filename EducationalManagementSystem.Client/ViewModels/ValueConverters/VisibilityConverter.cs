@@ -12,17 +12,29 @@ namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
     public class VisibilityConverter : IValueConverter
     {
         public Type Type { get; set; }
-        public bool Show { get; set; } = true;
+        public string Object { get; set; }
+        public bool Negated { get; set; } = false;
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return Visibility.Collapsed;
-            var type = value.GetType();
-            if (type == Type || type.IsSubclassOf(Type))
-                return Show ? Visibility.Visible : Visibility.Collapsed;
-            else
-                return Show ? Visibility.Collapsed : Visibility.Visible;
+            if (Object != null)
+            {
+                if (value.ToString() == Object)
+                    return Negated ? Visibility.Collapsed : Visibility.Visible;
+                else
+                    return Negated ? Visibility.Visible : Visibility.Collapsed;
+            }
+            if (Type != null)
+            {
+                var type = value.GetType();
+                if (type == Type || type.IsSubclassOf(Type))
+                    return Negated ? Visibility.Collapsed : Visibility.Visible;
+                else
+                    return Negated ? Visibility.Visible : Visibility.Collapsed;
+            }
+            throw new ArgumentOutOfRangeException();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

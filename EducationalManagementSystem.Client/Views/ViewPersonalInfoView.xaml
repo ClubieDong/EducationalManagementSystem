@@ -20,12 +20,6 @@
                     <Setter Property="Margin" Value="0,0,0,20"/>
                     <Setter Property="Padding" Value="0,5,0,5"/>
                 </Style>
-                <valueconverters:VisibilityConverter x:Key="StudentConverter" Type="{x:Type usermodels:Student}"/>
-                <valueconverters:VisibilityConverter x:Key="UndergraduateConverter" Type="{x:Type usermodels:Undergraduate}"/>
-                <valueconverters:VisibilityConverter x:Key="PostgraduateConverter" Type="{x:Type usermodels:Postgraduate}"/>
-                <valueconverters:VisibilityConverter x:Key="AdministratorConverter" Type="{x:Type usermodels:Administrator}"/>
-                <valueconverters:VisibilityConverter x:Key="CollegeAdministratorConverter" Type="{x:Type usermodels:CollegeAdministrator}"/>
-                <valueconverters:VisibilityConverter x:Key="TeacherConverter" Type="{x:Type usermodels:Teacher}"/>
             </StackPanel.Resources>
             <GroupBox Header="用户信息：">
                 <Grid>
@@ -76,7 +70,7 @@
                     <TextBlock Grid.Row="18" Grid.Column="1" Text="{Binding User.Address}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="学生信息：" Visibility="{Binding Path=User, Converter={StaticResource StudentConverter}}">
+            <GroupBox Header="学生信息：" Visibility="{Binding Path=User, Converter={StaticResource StudentVisibilityConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -93,7 +87,7 @@
                     <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding User.Major.Name}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="本科生信息：" Visibility="{Binding Path=User, Converter={StaticResource UndergraduateConverter}}">
+            <GroupBox Header="本科生信息：" Visibility="{Binding Path=User, Converter={StaticResource UndergraduateVisibilityConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -106,7 +100,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.Class}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="研究生信息：" Visibility="{Binding Path=User, Converter={StaticResource PostgraduateConverter}}">
+            <GroupBox Header="研究生信息：" Visibility="{Binding Path=User, Converter={StaticResource PostgraduateVisibilityConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -119,7 +113,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.Tutor.Name}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="管理员信息：" Visibility="{Binding Path=User, Converter={StaticResource AdministratorConverter}}">
+            <GroupBox Header="管理员信息：" Visibility="{Binding Path=User, Converter={StaticResource AdministratorVisibilityConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -132,7 +126,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.MonthlySalary}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="院级管理员信息：" Visibility="{Binding Path=User, Converter={StaticResource CollegeAdministratorConverter}}">
+            <GroupBox Header="院级管理员信息：" Visibility="{Binding Path=User, Converter={StaticResource CollegeAdministratorVisibilityConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -145,7 +139,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding User.College.Name}"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="老师信息：" Visibility="{Binding Path=User, Converter={StaticResource TeacherConverter}}">
+            <GroupBox Header="老师信息：" Visibility="{Binding Path=User, Converter={StaticResource TeacherVisibilityConverter}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>

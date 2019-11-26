@@ -14,28 +14,8 @@
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <views:LoginView x:Name="loginView" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <views:LoginView.Style>
-                <Style>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="Login">
-                            <Setter Property="UIElement.Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                    <Setter Property="UIElement.Visibility" Value="Collapsed"/>
-                </Style>
-            </views:LoginView.Style>
-        </views:LoginView>
-        <DockPanel>
-            <DockPanel.Style>
-                <Style>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="Login">
-                            <Setter Property="UIElement.Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DockPanel.Style>
+        <views:LoginView x:Name="loginView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource LoginVisibilityConverter}}"/>
+        <DockPanel Visibility="{Binding Path=State, Converter={StaticResource DefaultVisibilityConverter}}">
             <Grid DockPanel.Dock="Top" Background="LightCyan">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
@@ -68,33 +48,13 @@
                     <Button Content="查询个人信息" Command="{Binding ViewPersonalInfoCommand}"/>
                     <Button Content="修改个人信息" Command="{Binding EditPersonalInfoCommand}"/>
                     <Button Content="修改密码" Command="{Binding ChangePasswordCommand}"/>
+                    <Button Content="添加课程" Command="{Binding AddCourseCommand}" Visibility="{Binding User, Converter={StaticResource TeacherVisibilityConverter}}"/>
                 </StackPanel>
             </Grid>
             <Grid>
-                <views:ViewPersonalInfoView x:Name="viewPersonalInfoView">
-                    <views:ViewPersonalInfoView.Style>
-                        <Style>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="ViewPersonalInfo">
-                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                            <Setter Property="UIElement.Visibility" Value="Collapsed"/>
-                        </Style>
-                    </views:ViewPersonalInfoView.Style>
-                </views:ViewPersonalInfoView>
-                <views:ChangePasswordView x:Name="changePasswordView">
-                    <views:ChangePasswordView.Style>
-                        <Style>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=mainWindow, Path=DataContext.State}" Value="ChangePassword">
-                                    <Setter Property="UIElement.Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                            <Setter Property="UIElement.Visibility" Value="Collapsed"/>
-                        </Style>
-                    </views:ChangePasswordView.Style>
-                </views:ChangePasswordView>
+                <views:ViewPersonalInfoView x:Name="viewPersonalInfoView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource ViewPersonalInfoVisibilityConverter}}"/>
+                <views:ChangePasswordView x:Name="changePasswordView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource ChangePasswordVisibilityConverter}}"/>
+                <views:AddCourseView x:Name="addCourseView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AddCourseVisibilityConverter}}"/>
             </Grid>
         </DockPanel>
     </Grid>

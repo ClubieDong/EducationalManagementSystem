@@ -1,7 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:EducationalManagementSystem.Client.Resources"
-                    xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.ViewModels.ValueConverters">
+                    xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.ViewModels.ValueConverters"
+                    xmlns:usermodels="clr-namespace:EducationalManagementSystem.Client.Models.UserModels">
     <valueconverters:GenderConverter x:Key="GenderConverter"/>
     <valueconverters:PasswordBoxesConverter x:Key="PasswordBoxesConverter"/>
+    <valueconverters:VisibilityConverter x:Key="StudentVisibilityConverter" Type="{x:Type usermodels:Student}"/>
+    <valueconverters:VisibilityConverter x:Key="UndergraduateVisibilityConverter" Type="{x:Type usermodels:Undergraduate}"/>
+    <valueconverters:VisibilityConverter x:Key="PostgraduateVisibilityConverter" Type="{x:Type usermodels:Postgraduate}"/>
+    <valueconverters:VisibilityConverter x:Key="AdministratorVisibilityConverter" Type="{x:Type usermodels:Administrator}"/>
+    <valueconverters:VisibilityConverter x:Key="CollegeAdministratorVisibilityConverter" Type="{x:Type usermodels:CollegeAdministrator}"/>
+    <valueconverters:VisibilityConverter x:Key="TeacherVisibilityConverter" Type="{x:Type usermodels:Teacher}"/>
+    <valueconverters:VisibilityConverter x:Key="LoginVisibilityConverter" Object="Login"/>
+    <valueconverters:VisibilityConverter x:Key="DefaultVisibilityConverter" Object="Login" Negated="True"/>
+    <valueconverters:VisibilityConverter x:Key="ViewPersonalInfoVisibilityConverter" Object="ViewPersonalInfo"/>
+    <valueconverters:VisibilityConverter x:Key="ChangePasswordVisibilityConverter" Object="ChangePassword"/>
+    <valueconverters:VisibilityConverter x:Key="AddCourseVisibilityConverter" Object="AddCourse"/>
+    <valueconverters:PublicityConverter x:Key="PublicityConverter"/>
 </ResourceDictionary>

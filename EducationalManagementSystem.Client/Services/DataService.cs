@@ -20,6 +20,8 @@ namespace EducationalManagementSystem.Client.Services
         ObjectWithID NewObject(Type type);
         object GetList(ObjectWithID obj, string propertyName);
         object GetDictionary(ObjectWithID obj, string propertyName);
+        void GetAllObjects(Type type);
+        bool CheckUniqueness(PropertyInfo property, object value);
     }
 
     public class DataServiceFactory
@@ -173,7 +175,7 @@ namespace EducationalManagementSystem.Client.Services
                         }
                     }
                 // 多对多
-                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(ObservableCollection<>) && relatedPropertyType.GenericTypeArguments[0] == objType)
+                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(List<>) && relatedPropertyType.GenericTypeArguments[0] == objType)
                     using (var cmd = Connection.CreateCommand())
                     {
                         var first = objType.Name;
@@ -205,6 +207,38 @@ namespace EducationalManagementSystem.Client.Services
         public object GetDictionary(ObjectWithID obj, string propertyName)
         {
             throw new NotImplementedException();
+        }
+
+        public void GetAllObjects(Type type)
+        {
+            using (var cmd = Connection.CreateCommand())
+            {
+                cmd.CommandText = $"SELECT ID FROM {type.Name}";
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var id = (uint)reader[0];
+                        ObjectWithID.GetByID(id, type.GUID);
+                    }
+                }
+            }
+        }
+
+        public bool CheckUniqueness(PropertyInfo property, object value)
+        {
+            using (var cmd = Connection.CreateCommand())
+            {
+                cmd.CommandText = $"SELECT COUNT(*) FROM {property.DeclaringType.Name} WHERE {property.Name} = @Value";
+                cmd.Parameters.Add("@Value", _TypeToDbType[property.PropertyType]);
+                cmd.Parameters["@Value"].Value = value;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    reader.Read();
+                    var count = (long)reader[0];
+                    return count == 0;
+                }
+            }
         }
     }
 }

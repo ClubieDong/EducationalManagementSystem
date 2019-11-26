@@ -52,13 +52,13 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        private ObservableCollection<Activity> _ActivityList;
-        public ObservableCollection<Activity> ActivityList
+        private List<Activity> _ActivityList;
+        public List<Activity> ActivityList
         {
             get
             {
                 if (ID.HasValue && _ActivityList == null)
-                    _ActivityList = (ObservableCollection<Activity>)DataServiceFactory.DataService.GetList(this, nameof(ActivityList));
+                    _ActivityList = (List<Activity>)DataServiceFactory.DataService.GetList(this, nameof(ActivityList));
                 return _ActivityList;
             }
         }
