@@ -112,6 +112,26 @@ namespace EducationalManagementSystem.Client.Models.UserModels
             }
         }
 
+        private string _Description;
+        public string Description
+        {
+            get
+            {
+                if (ID.HasValue && _Description == null)
+                    _Description = (string)DataServiceFactory.DataService.GetValue(this, nameof(Description));
+                return _Description;
+            }
+            set
+            {
+                if (_Description == value)
+                    return;
+                _Description = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Description), value);
+            }
+        }
+
         private List<Class> _ClassList;
         public List<Class> ClassList
         {

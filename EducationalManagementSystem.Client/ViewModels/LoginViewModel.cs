@@ -21,6 +21,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             LoginCommand = new DelegateCommand<PasswordBox>(Login, CanLogin);
         }
 
+        public MainWindowViewModel MainVM { get; set; }
+
         public event Action<User> OnLoggedIn;
 
         #region UserID
@@ -45,7 +47,8 @@ namespace EducationalManagementSystem.Client.ViewModels
                 else
                 {
                     var user = LoginServiceFactory.LoginService.Login(UserID, passwordBox.Password);
-                    OnLoggedIn?.Invoke(user);
+                    MainVM.User = user;
+                    MainVM.State = MainWindowViewModel.ViewState.Default;
                 }
             }
             catch (NoUserIDException)

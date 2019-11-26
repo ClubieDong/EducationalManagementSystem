@@ -1,25 +1,107 @@
-﻿using EducationalManagementSystem.Client.Models.HierarchyModels;
+﻿using EducationalManagementSystem.Client.Models.CourseModels;
+using EducationalManagementSystem.Client.Models.HierarchyModels;
+using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EducationalManagementSystem.Client.Models.CourseModels
+namespace EducationalManagementSystem.Client.Models.ApplicationModels
 {
-    public class Course : ObjectWithID
+    public abstract class Application : ObjectWithID
     {
-        public static Dictionary<uint, Course> CourseList { get; } = new Dictionary<uint, Course>();
+        public static Dictionary<uint, Application> ApplicationList { get; } = new Dictionary<uint, Application>();
 
-        public enum PublicityType
+        public enum AuditState
         {
-            Major,
-            College,
-            University
+            Auditing,
+            Approved,
+            Disapproved,
+            Cancelled
         }
 
+        private User _Applicant;
+        public User Applicant
+        {
+            get
+            {
+                if (ID.HasValue && _Applicant == null)
+                    _Applicant = (User)DataServiceFactory.DataService.GetValue(this, nameof(Applicant));
+                return _Applicant;
+            }
+            set
+            {
+                if (_Applicant == value)
+                    return;
+                _Applicant = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Applicant), value);
+            }
+        }
+
+        private Administrator _Auditor;
+        public Administrator Auditor
+        {
+            get
+            {
+                if (ID.HasValue && _Auditor == null)
+                    _Auditor = (Administrator)DataServiceFactory.DataService.GetValue(this, nameof(Auditor));
+                return _Auditor;
+            }
+            set
+            {
+                if (_Auditor == value)
+                    return;
+                _Auditor = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Auditor), value);
+            }
+        }
+
+        private AuditState? _State;
+        public AuditState? State
+        {
+            get
+            {
+                if (ID.HasValue && _State == null)
+                    _State = (AuditState)DataServiceFactory.DataService.GetValue(this, nameof(State));
+                return _State;
+            }
+            set
+            {
+                if (_State == value)
+                    return;
+                _State = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(State), value);
+            }
+        }
+
+        public void Approve(Administrator admin)
+        {
+            Auditor = admin;
+            State = AuditState.Approved;
+            OnApproved();
+        }
+        public void Disapprove(Administrator admin)
+        {
+            Auditor = admin;
+            State = AuditState.Disapproved;
+        }
+        public void Cancel()
+        {
+            State = AuditState.Cancelled;
+        }
+        public virtual void OnApproved() { }
+    }
+
+    public class AddCourseApplication : Application
+    {
         private string _CourseID;
         public string CourseID
         {
@@ -100,13 +182,13 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        private PublicityType? _Publicity;
-        public PublicityType? Publicity
+        private Course.PublicityType? _Publicity;
+        public Course.PublicityType? Publicity
         {
             get
             {
                 if (ID.HasValue && _Publicity == null)
-                    _Publicity = (PublicityType)DataServiceFactory.DataService.GetValue(this, nameof(Publicity));
+                    _Publicity = (Course.PublicityType)DataServiceFactory.DataService.GetValue(this, nameof(Publicity));
                 return _Publicity;
             }
             set
@@ -140,26 +222,15 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        private List<Class> _ClassList;
-        public List<Class> ClassList
+        public override void OnApproved()
         {
-            get
-            {
-                if (ID.HasValue && _ClassList == null)
-                    _ClassList = (List<Class>)DataServiceFactory.DataService.GetList(this, nameof(ClassList));
-                return _ClassList;
-            }
-        }
-
-        private List<Examination> _ExaminationList;
-        public List<Examination> ExaminationList
-        {
-            get
-            {
-                if (ID.HasValue && _ExaminationList == null)
-                    _ExaminationList = (List<Examination>)DataServiceFactory.DataService.GetList(this, nameof(ExaminationList));
-                return _ExaminationList;
-            }
+            var course = (Course)DataServiceFactory.DataService.NewObject(typeof(Course));
+            course.CourseID = CourseID;
+            course.Name = Name;
+            course.Credit = Credit;
+            course.Major = Major;
+            course.Publicity = Publicity;
+            course.Description = Description;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using EducationalManagementSystem.Client.Models.HierarchyModels;
+﻿using EducationalManagementSystem.Client.Models.ApplicationModels;
+using EducationalManagementSystem.Client.Models.CourseModels;
+using EducationalManagementSystem.Client.Models.HierarchyModels;
 using EducationalManagementSystem.Client.Models.UserModels;
 using System;
 using System.Collections.Generic;
@@ -24,6 +26,16 @@ namespace EducationalManagementSystem.Client.Models
 
             { typeof(College).GUID, typeof(College) },
             { typeof(Major).GUID, typeof(Major) },
+
+            { typeof(Course).GUID, typeof(Course) },
+            { typeof(Class).GUID, typeof(Class) },
+            { typeof(Classroom).GUID, typeof(Classroom) },
+            { typeof(Activity).GUID, typeof(Activity) },
+            { typeof(Lesson).GUID, typeof(Lesson) },
+            { typeof(Examination).GUID, typeof(Examination) },
+
+            { typeof(Application).GUID, typeof(Application) },
+            { typeof(AddCourseApplication).GUID, typeof(AddCourseApplication) },
         };
 
         public uint? ID { get; set; }
@@ -31,7 +43,7 @@ namespace EducationalManagementSystem.Client.Models
         public static ObjectWithID GetByID(uint id, Guid guid)
         {
             var type = _GuidToType[guid];
-            Type baseType = type;
+            var baseType = type;
             while (baseType.BaseType != typeof(ObjectWithID))
                 baseType = baseType.BaseType;
             var dict = baseType.GetProperty($"{baseType.Name}List").GetValue(null);

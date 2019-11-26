@@ -1,4 +1,5 @@
-﻿using EducationalManagementSystem.Client.Models.CourseModels;
+﻿using EducationalManagementSystem.Client.Models.ApplicationModels;
+using EducationalManagementSystem.Client.Models.CourseModels;
 using EducationalManagementSystem.Client.Models.HierarchyModels;
 using EducationalManagementSystem.Client.Services;
 using Prism.Commands;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Application = EducationalManagementSystem.Client.Models.ApplicationModels.Application;
 
 namespace EducationalManagementSystem.Client.ViewModels
 {
@@ -20,6 +22,8 @@ namespace EducationalManagementSystem.Client.ViewModels
         {
             SummitCommand = new DelegateCommand(Summit, CanSummit);
         }
+
+        public MainWindowViewModel MainVM { get; set; }
 
         private string _CourseID;
         public string CourseID
@@ -63,6 +67,13 @@ namespace EducationalManagementSystem.Client.ViewModels
             set => SetProperty(ref _Publicity, value);
         }
 
+        private string _Description;
+        public string Description
+        {
+            get => _Description;
+            set => SetProperty(ref _Description, value);
+        }
+
         private List<College> _CollegeList;
         public List<College> CollegeList
         {
@@ -73,7 +84,16 @@ namespace EducationalManagementSystem.Client.ViewModels
         public ICommand SummitCommand { get; }
         private void Summit()
         {
-            MessageBox.Show("Summit!");
+            var app = (AddCourseApplication)DataServiceFactory.DataService.NewObject(typeof(AddCourseApplication));
+            app.Applicant = MainVM.User;
+            app.State = Application.AuditState.Auditing;
+            app.CourseID = CourseID;
+            app.Name = Name;
+            app.Credit = Credit;
+            app.Major = Major;
+            app.Publicity = Publicity;
+            app.Description = Description;
+            MessageBox.Show("申请提交成功！");
         }
         private bool CanSummit() => true;
 

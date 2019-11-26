@@ -33,7 +33,7 @@ namespace EducationalManagementSystem.Client.ViewModels
             set
             {
                 _LoginVM = value;
-                _LoginVM.OnLoggedIn += LoginVM_OnLoggedIn;
+                _LoginVM.MainVM = this;
             }
         }
 
@@ -56,6 +56,17 @@ namespace EducationalManagementSystem.Client.ViewModels
             {
                 _ChangePasswordVM = value;
                 _ChangePasswordVM.MainVM = this;
+            }
+        }
+
+        private AddCourseViewModel _AddCourseVM;
+        public AddCourseViewModel AddCourseVM
+        {
+            get => _AddCourseVM;
+            set
+            {
+                _AddCourseVM = value;
+                _AddCourseVM.MainVM = this;
             }
         }
         #endregion
@@ -138,11 +149,5 @@ namespace EducationalManagementSystem.Client.ViewModels
         public bool CanAddCourse() => true;
         #endregion
         #endregion
-
-        private void LoginVM_OnLoggedIn(User user)
-        {
-            User = user;
-            State = ViewState.Default;
-        }
     }
 }

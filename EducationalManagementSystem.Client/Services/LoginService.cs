@@ -27,50 +27,47 @@ namespace EducationalManagementSystem.Client.Services
     {
         public User Login(string userID, string password)
         {
+            var cmd = DatabaseDataService.Command;
             // 检查用户是否存在
-            using (var cmd = DatabaseDataService.Connection.CreateCommand())
+            cmd.CommandText = $"SELECT COUNT(*) FROM User WHERE UserID = @UserID";
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add("@UserID", MySqlDbType.TinyText);
+            cmd.Parameters["@UserID"].Value = userID;
+            using (var reader = cmd.ExecuteReader())
             {
-                cmd.CommandText = $"SELECT COUNT(*) FROM User WHERE UserID = @UserID";
-                cmd.Parameters.Add("@UserID", MySqlDbType.TinyText);
-                cmd.Parameters["@UserID"].Value = userID;
-                using (var reader = cmd.ExecuteReader())
-                {
-                    reader.Read();
-                    if ((long)reader[0] == 0)
-                        throw new NoUserIDException();
-                }
+                reader.Read();
+                if ((long)reader[0] == 0)
+                    throw new NoUserIDException();
             }
             // 检查密码是否正确
             byte[] bytes = Encoding.UTF8.GetBytes(password);
             byte[] sha256 = SHA256.Create().ComputeHash(bytes);
-            using (var cmd = DatabaseDataService.Connection.CreateCommand())
+            cmd.CommandText = $"SELECT Password = @Password FROM User WHERE UserID = @UserID";
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add("@UserID", MySqlDbType.TinyText);
+            cmd.Parameters["@UserID"].Value = userID;
+            cmd.Parameters.Add("@Password", MySqlDbType.Binary);
+            cmd.Parameters["@Password"].Value = sha256;
+            using (var reader = cmd.ExecuteReader())
             {
-                cmd.CommandText = $"SELECT Password = @Password FROM User WHERE UserID = @UserID";
-                cmd.Parameters.Add("@UserID", MySqlDbType.TinyText);
-                cmd.Parameters["@UserID"].Value = userID;
-                cmd.Parameters.Add("@Password", MySqlDbType.Binary);
-                cmd.Parameters["@Password"].Value = sha256;
-                using (var reader = cmd.ExecuteReader())
-                {
-                    reader.Read();
-                    if ((long)reader[0] == 0)
-                        throw new WrongPasswordException();
-                }
+                reader.Read();
+                if ((long)reader[0] == 0)
+                    throw new WrongPasswordException();
             }
             // 获取用户对象的ID
-            using (var cmd = DatabaseDataService.Connection.CreateCommand())
+            uint id;
+            cmd.CommandText = $"SELECT ID FROM User WHERE UserID = @UserID";
+            cmd.Parameters.Clear();
+            cmd.Parameters.Add("@UserID", MySqlDbType.TinyText);
+            cmd.Parameters["@UserID"].Value = userID;
+            using (var reader = cmd.ExecuteReader())
             {
-                cmd.CommandText = $"SELECT ID, Type FROM User WHERE UserID = @UserID";
-                cmd.Parameters.Add("@UserID", MySqlDbType.TinyText);
-                cmd.Parameters["@UserID"].Value = userID;
-                using (var reader = cmd.ExecuteReader())
-                {
-                    reader.Read();
-                    var id = (uint)reader["ID"];
-                    var guid = new Guid((byte[])reader["Type"]);
-                    return (User)ObjectWithID.GetByID(id, guid);
-                }
+                reader.Read();
+                id = (uint)reader[0];
             }
+            // 创建对象，返回结果
+            var user = (User)new DatabaseDataService().CreateObject(id, typeof(User));
+            return user;
         }
     }
 }

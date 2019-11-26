@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ApplicationModels\Application.cs" />
     <Compile Include="Models\CourseModels\Activity.cs" />
     <Compile Include="Models\CourseModels\Class.cs" />
     <Compile Include="Models\CourseModels\Classroom.cs" />

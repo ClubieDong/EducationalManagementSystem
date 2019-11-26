@@ -34,6 +34,7 @@ namespace EducationalManagementSystem.Client
             vm.LoginVM = (LoginViewModel)loginView.DataContext;
             vm.ViewPersonalInfoVM = (ViewPersonalInfoViewModel)viewPersonalInfoView.DataContext;
             vm.ChangePasswordVM = (ChangePasswordViewModel)changePasswordView.DataContext;
+            vm.AddCourseVM = (AddCourseViewModel)addCourseView.DataContext;
         }
     }
 }
