@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
+namespace EducationalManagementSystem.Client.Views.ValueConverters
 {
     public class PasswordBoxesConverter : IMultiValueConverter
     {

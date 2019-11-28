@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using EducationalManagementSystem.Client.Models.CourseModels;
 
-namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
+namespace EducationalManagementSystem.Client.Views.ValueConverters
 {
     public class PublicityConverter : IValueConverter
     {

@@ -82,16 +82,58 @@ namespace EducationalManagementSystem.Client.Models.ApplicationModels
             }
         }
 
+        private DateTime? _SubmitTime;
+        public DateTime? SubmitTime
+        {
+            get
+            {
+                if (ID.HasValue && _SubmitTime == null)
+                    _SubmitTime = (DateTime)DataServiceFactory.DataService.GetValue(this, nameof(SubmitTime));
+                return _SubmitTime;
+            }
+            set
+            {
+                if (_SubmitTime == value)
+                    return;
+                _SubmitTime = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(SubmitTime), value);
+            }
+        }
+
+        private DateTime? _AuditTime;
+        public DateTime? AuditTime
+        {
+            get
+            {
+                if (ID.HasValue && _AuditTime == null)
+                    _AuditTime = (DateTime)DataServiceFactory.DataService.GetValue(this, nameof(AuditTime));
+                return _AuditTime;
+            }
+            set
+            {
+                if (_AuditTime == value)
+                    return;
+                _AuditTime = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(AuditTime), value);
+            }
+        }
+
         public void Approve(Administrator admin)
         {
+            OnApproved();
             Auditor = admin;
             State = AuditState.Approved;
-            OnApproved();
+            AuditTime = DateTime.Now;
         }
         public void Disapprove(Administrator admin)
         {
             Auditor = admin;
             State = AuditState.Disapproved;
+            AuditTime = DateTime.Now;
         }
         public void Cancel()
         {

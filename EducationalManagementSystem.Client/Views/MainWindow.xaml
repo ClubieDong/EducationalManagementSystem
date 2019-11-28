@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:EducationalManagementSystem.Client.Views"
         xmlns:viewmodels="clr-namespace:EducationalManagementSystem.Client.ViewModels"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.ViewModels.ValueConverters"
+        xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.Views.ValueConverters"
         mc:Ignorable="d"
         x:Name ="mainWindow" Title="教务管理系统  By Clubie" MinHeight="600" MinWidth="800" Height="750" Width="1000">
     <Window.DataContext>
@@ -50,6 +50,7 @@
                     <Button Content="修改密码" Command="{Binding ChangePasswordCommand}"/>
                     <Button Content="添加课程" Command="{Binding AddCourseCommand}" Visibility="{Binding User, Converter={StaticResource TeacherVisibilityConverter}}"/>
                     <Button Content="添加教学班" Command="{Binding AddClassCommand}" Visibility="{Binding User, Converter={StaticResource AdministratorVisibilityConverter}}"/>
+                    <Button Content="审核申请" Command="{Binding AuditCommand}" Visibility="{Binding User, Converter={StaticResource AdministratorVisibilityConverter}}"/>
                 </StackPanel>
             </Grid>
             <Grid>
@@ -57,6 +58,7 @@
                 <views:ChangePasswordView x:Name="changePasswordView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource ChangePasswordVisibilityConverter}}"/>
                 <views:AddCourseView x:Name="addCourseView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AddCourseVisibilityConverter}}"/>
                 <views:AddClassView x:Name="addClassView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AddClassVisibilityConverter}}"/>
+                <views:AuditView x:Name="auditView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AuditVisibilityConverter}}"/>
             </Grid>
         </DockPanel>
     </Grid>

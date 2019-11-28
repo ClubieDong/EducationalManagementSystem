@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:EducationalManagementSystem.Client.Views"
              xmlns:viewmodels="clr-namespace:EducationalManagementSystem.Client.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.ViewModels.ValueConverters"
+             xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.Views.ValueConverters"
              xmlns:usermodels="clr-namespace:EducationalManagementSystem.Client.Models.UserModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" IsVisibleChanged="VisiblilityChanged">

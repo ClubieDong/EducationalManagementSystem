@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:EducationalManagementSystem.Client.Resources"
-                    xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.ViewModels.ValueConverters"
+                    xmlns:valueconverters="clr-namespace:EducationalManagementSystem.Client.Views.ValueConverters"
                     xmlns:usermodels="clr-namespace:EducationalManagementSystem.Client.Models.UserModels">
     <valueconverters:GenderConverter x:Key="GenderConverter"/>
     <valueconverters:PasswordBoxesConverter x:Key="PasswordBoxesConverter"/>
@@ -17,5 +17,8 @@
     <valueconverters:VisibilityConverter x:Key="ChangePasswordVisibilityConverter" Object="ChangePassword"/>
     <valueconverters:VisibilityConverter x:Key="AddCourseVisibilityConverter" Object="AddCourse"/>
     <valueconverters:VisibilityConverter x:Key="AddClassVisibilityConverter" Object="AddClass"/>
+    <valueconverters:VisibilityConverter x:Key="AuditVisibilityConverter" Object="Audit"/>
     <valueconverters:PublicityConverter x:Key="PublicityConverter"/>
+    <valueconverters:ApplicationTypeConverter x:Key="ApplicationTypeConverter"/>
+    <valueconverters:ApplicationStateConverter x:Key="ApplicationStateConverter"/>
 </ResourceDictionary>

@@ -9,4 +9,5 @@ namespace EducationalManagementSystem.Client.Services.Exceptions
     public class NoUserIDException : ApplicationException { }
     public class WrongPasswordException : ApplicationException { }
     public class ReflectionException : ApplicationException { }
+    public class IDDuplicatedException : ApplicationException { }
 }

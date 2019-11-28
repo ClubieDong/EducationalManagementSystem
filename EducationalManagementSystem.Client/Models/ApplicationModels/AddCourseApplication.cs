@@ -1,6 +1,7 @@
 ﻿using EducationalManagementSystem.Client.Models.CourseModels;
 using EducationalManagementSystem.Client.Models.HierarchyModels;
 using EducationalManagementSystem.Client.Services;
+using EducationalManagementSystem.Client.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,6 +134,8 @@ namespace EducationalManagementSystem.Client.Models.ApplicationModels
 
         public override void OnApproved()
         {
+            if (!DataServiceFactory.DataService.CheckUniqueness(typeof(Course).GetProperty(nameof(CourseID)), CourseID))
+                throw new IDDuplicatedException();
             var course = (Course)DataServiceFactory.DataService.NewObject(typeof(Course));
             course.CourseID = CourseID;
             course.Name = Name;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
+namespace EducationalManagementSystem.Client.Views.ValueConverters
 {
     public class VisibilityConverter : IValueConverter
     {

@@ -113,6 +113,7 @@ namespace EducationalManagementSystem.Client.ViewModels
                 var app = (AddCourseApplication)DataServiceFactory.DataService.NewObject(typeof(AddCourseApplication));
                 app.Applicant = MainVM.User;
                 app.State = Application.AuditState.Auditing;
+                app.SubmitTime = DateTime.Now;
                 app.CourseID = CourseID;
                 app.Name = Name;
                 app.Credit = Credit;

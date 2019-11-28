@@ -111,13 +111,10 @@
     </Compile>
     <Compile Include="ViewModels\AddClassViewModel.cs" />
     <Compile Include="ViewModels\AddCourseViewModel.cs" />
+    <Compile Include="ViewModels\AuditViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\ValueConverters\GenderConverter.cs" />
-    <Compile Include="ViewModels\ValueConverters\PasswordBoxesConverter.cs" />
-    <Compile Include="ViewModels\ValueConverters\PublicityConverter.cs" />
-    <Compile Include="ViewModels\ValueConverters\VisibilityConverter.cs" />
     <Compile Include="ViewModels\ViewPersonalInfoViewModel.cs" />
     <Compile Include="Views\AddClassView.xaml.cs">
       <DependentUpon>AddClassView.xaml</DependentUpon>
@@ -125,12 +122,22 @@
     <Compile Include="Views\AddCourseView.xaml.cs">
       <DependentUpon>AddCourseView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AuditView.xaml.cs">
+      <DependentUpon>AuditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DataTemplateSelectors\ApplicationTypeSelector.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ValueConverters\ApplicationStateConverter.cs" />
+    <Compile Include="Views\ValueConverters\ApplicationTypeConverter.cs" />
+    <Compile Include="Views\ValueConverters\GenderConverter.cs" />
+    <Compile Include="Views\ValueConverters\PasswordBoxesConverter.cs" />
+    <Compile Include="Views\ValueConverters\PublicityConverter.cs" />
+    <Compile Include="Views\ValueConverters\VisibilityConverter.cs" />
     <Compile Include="Views\ViewPersonalInfoView.xaml.cs">
       <DependentUpon>ViewPersonalInfoView.xaml</DependentUpon>
     </Compile>
@@ -147,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddCourseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AuditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,6 +204,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
