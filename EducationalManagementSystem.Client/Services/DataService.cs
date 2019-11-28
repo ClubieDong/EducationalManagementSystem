@@ -182,7 +182,7 @@ namespace EducationalManagementSystem.Client.Services
             {
                 var relatedPropertyType = relatedProperty.PropertyType;
                 // 多对1
-                if (relatedPropertyType == objType)
+                if (objType.IsSubclassOf(relatedPropertyType))
                 {
                     var idList = new List<uint>();
                     Command.CommandText = $"SELECT ID FROM {relatedType.Name} WHERE {relatedProperty.Name} = {obj.ID}";
@@ -199,7 +199,7 @@ namespace EducationalManagementSystem.Client.Services
                     return result;
                 }
                 // 多对多
-                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(List<>) && relatedPropertyType.GenericTypeArguments[0] == objType)
+                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(List<>) && objType.IsSubclassOf(relatedPropertyType.GenericTypeArguments[0]))
                 {
                     var first = objType.Name;
                     var second = relatedType.Name;
@@ -224,7 +224,8 @@ namespace EducationalManagementSystem.Client.Services
                     return result;
                 }
             }
-            throw new ReflectionException();
+            return null;
+            //throw new ReflectionException();
         }
 
         public object GetDictionary(ObjectWithID obj, string propertyName)

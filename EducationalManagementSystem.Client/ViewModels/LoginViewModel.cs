@@ -23,8 +23,6 @@ namespace EducationalManagementSystem.Client.ViewModels
 
         public MainWindowViewModel MainVM { get; set; }
 
-        public event Action<User> OnLoggedIn;
-
         #region UserID
         private string _UserID;
         public string UserID

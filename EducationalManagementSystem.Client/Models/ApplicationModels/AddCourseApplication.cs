@@ -1,25 +1,16 @@
-﻿using EducationalManagementSystem.Client.Models.HierarchyModels;
+﻿using EducationalManagementSystem.Client.Models.CourseModels;
+using EducationalManagementSystem.Client.Models.HierarchyModels;
 using EducationalManagementSystem.Client.Services;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EducationalManagementSystem.Client.Models.CourseModels
+namespace EducationalManagementSystem.Client.Models.ApplicationModels
 {
-    public class Course : ObjectWithID
+    public class AddCourseApplication : Application
     {
-        public static Dictionary<uint, Course> CourseList { get; } = new Dictionary<uint, Course>();
-
-        public enum PublicityType
-        {
-            Major,
-            College,
-            University
-        }
-
         private string _CourseID;
         public string CourseID
         {
@@ -100,13 +91,13 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        private PublicityType? _Publicity;
-        public PublicityType? Publicity
+        private Course.PublicityType? _Publicity;
+        public Course.PublicityType? Publicity
         {
             get
             {
                 if (ID.HasValue && _Publicity == null)
-                    _Publicity = (PublicityType)DataServiceFactory.DataService.GetValue(this, nameof(Publicity));
+                    _Publicity = (Course.PublicityType)DataServiceFactory.DataService.GetValue(this, nameof(Publicity));
                 return _Publicity;
             }
             set
@@ -140,20 +131,15 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        private List<Class> _ClassList;
-        public List<Class> ClassList
+        public override void OnApproved()
         {
-            get
-            {
-                if (ID.HasValue && _ClassList == null)
-                    _ClassList = (List<Class>)DataServiceFactory.DataService.GetList(this, nameof(ClassList));
-                return _ClassList;
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"{CourseID}  {Name}";
+            var course = (Course)DataServiceFactory.DataService.NewObject(typeof(Course));
+            course.CourseID = CourseID;
+            course.Name = Name;
+            course.Credit = Credit;
+            course.Major = Major;
+            course.Publicity = Publicity;
+            course.Description = Description;
         }
     }
 }

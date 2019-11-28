@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:EducationalManagementSystem.Client.Views"
              xmlns:viewmodels="clr-namespace:EducationalManagementSystem.Client.ViewModels"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Class="EducationalManagementSystem.Client.Views.AddCourseView"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:usercontrols="clr-namespace:EducationalManagementSystem.Client.UserControls" x:Class="EducationalManagementSystem.Client.Views.AddCourseView"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" IsVisibleChanged="VisibilityChanged">
     <UserControl.DataContext>
@@ -43,9 +44,9 @@
         <TextBlock Grid.Row="4" Grid.Column="1" Text="学分：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBox Grid.Row="4" Grid.Column="2" Padding="5" Text="{Binding Credit}"/>
         <TextBlock Grid.Row="6" Grid.Column="1" Text="学院：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="6" Grid.Column="2" Padding="5" IsEditable="True" SelectedItem="{Binding College}" ItemsSource="{Binding CollegeList}" DisplayMemberPath="Name"/>
+        <usercontrols:ObjectSelector Grid.Row="6" Grid.Column="2" Padding="5" SelectedItem="{Binding College, Mode=TwoWay}" ItemsSource="{Binding CollegeList}"/>
         <TextBlock Grid.Row="8" Grid.Column="1" Text="专业：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="8" Grid.Column="2" Padding="5" IsEditable="True" SelectedItem="{Binding Major}" ItemsSource="{Binding College.MajorList}" DisplayMemberPath="Name"/>
+        <usercontrols:ObjectSelector Grid.Row="8" Grid.Column="2" Padding="5" SelectedItem="{Binding Major, Mode=TwoWay}" ItemsSource="{Binding MajorList}"/>
         <TextBlock Grid.Row="10" Grid.Column="1" Text="授课对象：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="10" Grid.Column="2" Padding="5" IsEditable="True" SelectedItem="{Binding Publicity, Converter={StaticResource PublicityConverter}}">
             <System:String>仅限本专业</System:String>
@@ -60,7 +61,7 @@
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="提交申请" Padding="5" IsDefault="True" Command="{Binding SummitCommand}"/>
+            <Button Grid.Column="1" Content="提交申请" Padding="5" IsDefault="True" Command="{Binding SubmitCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

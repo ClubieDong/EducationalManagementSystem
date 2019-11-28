@@ -62,5 +62,10 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
                 return _ActivityList;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{ClassroomID}  {SeatCount}人";
+        }
     }
 }

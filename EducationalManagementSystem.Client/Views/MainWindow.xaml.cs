@@ -1,4 +1,5 @@
 ﻿using EducationalManagementSystem.Client.Models;
+using EducationalManagementSystem.Client.Models.CourseModels;
 using EducationalManagementSystem.Client.Models.HierarchyModels;
 using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
@@ -35,6 +36,7 @@ namespace EducationalManagementSystem.Client
             vm.ViewPersonalInfoVM = (ViewPersonalInfoViewModel)viewPersonalInfoView.DataContext;
             vm.ChangePasswordVM = (ChangePasswordViewModel)changePasswordView.DataContext;
             vm.AddCourseVM = (AddCourseViewModel)addCourseView.DataContext;
+            vm.AddClassVM = (AddClassViewModel)addClassView.DataContext;
         }
     }
 }

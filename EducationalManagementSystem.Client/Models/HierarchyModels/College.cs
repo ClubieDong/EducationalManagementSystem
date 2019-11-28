@@ -62,5 +62,10 @@ namespace EducationalManagementSystem.Client.Models.HierarchyModels
                 return _MajorList;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{Number}院  {Name}";
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return null;
             switch ((User.GenderType)value)
             {
                 case User.GenderType.Male:
@@ -26,6 +28,8 @@ namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return null;
             switch ((string)value)
             {
                 case "男":

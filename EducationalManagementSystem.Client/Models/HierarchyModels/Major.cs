@@ -83,5 +83,10 @@ namespace EducationalManagementSystem.Client.Models.HierarchyModels
                 return _CourseList;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{Number}专  {Name}";
+        }
     }
 }

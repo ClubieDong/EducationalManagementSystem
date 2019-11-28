@@ -13,6 +13,8 @@ namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return null;
             switch ((Course.PublicityType)value)
             {
                 case Course.PublicityType.Major:
@@ -28,6 +30,8 @@ namespace EducationalManagementSystem.Client.ViewModels.ValueConverters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return null;
             switch ((string)value)
             {
                 case "仅限本专业":

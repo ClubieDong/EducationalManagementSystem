@@ -16,5 +16,6 @@
     <valueconverters:VisibilityConverter x:Key="ViewPersonalInfoVisibilityConverter" Object="ViewPersonalInfo"/>
     <valueconverters:VisibilityConverter x:Key="ChangePasswordVisibilityConverter" Object="ChangePassword"/>
     <valueconverters:VisibilityConverter x:Key="AddCourseVisibilityConverter" Object="AddCourse"/>
+    <valueconverters:VisibilityConverter x:Key="AddClassVisibilityConverter" Object="AddClass"/>
     <valueconverters:PublicityConverter x:Key="PublicityConverter"/>
 </ResourceDictionary>

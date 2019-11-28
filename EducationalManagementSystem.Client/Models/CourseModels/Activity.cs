@@ -101,23 +101,23 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
 
     public class Examination : Activity
     {
-        private Course _Course;
-        public Course Course
+        private Class _Class;
+        public Class Class
         {
             get
             {
-                if (ID.HasValue && _Course == null)
-                    _Course = (Course)DataServiceFactory.DataService.GetValue(this, nameof(Course));
-                return _Course;
+                if (ID.HasValue && _Class == null)
+                    _Class = (Class)DataServiceFactory.DataService.GetValue(this, nameof(Class));
+                return _Class;
             }
             set
             {
-                if (_Course == value)
+                if (_Class == value)
                     return;
-                _Course = value;
+                _Class = value;
                 if (!ID.HasValue)
                     return;
-                DataServiceFactory.DataService.SetValue(this, nameof(Course), value);
+                DataServiceFactory.DataService.SetValue(this, nameof(Class), value);
             }
         }
 

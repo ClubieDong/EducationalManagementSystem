@@ -142,6 +142,11 @@ namespace EducationalManagementSystem.Client.Models.UserModels
                 return _ClassList;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{UserID}  {Name}  {EducationBackground}";
+        }
     }
 
     public class Lecturer : Teacher

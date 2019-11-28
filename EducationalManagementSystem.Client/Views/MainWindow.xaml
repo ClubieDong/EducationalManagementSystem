@@ -26,7 +26,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" Text="教务管理系统" FontSize="20" Margin="0,15"/>
+                <TextBlock Grid.Column="1" Text="南京航空航天大学教务管理系统" FontSize="20" Margin="0,15"/>
                 <TextBlock Grid.Column="3" Text="{Binding User.Name, StringFormat=欢迎，{0:C}！}" VerticalAlignment="Center"/>
                 <TextBlock Grid.Column="5" Text="退出登录" VerticalAlignment="Center" TextDecorations="Underline" Cursor="Hand">
                     <i:Interaction.Triggers>
@@ -49,12 +49,14 @@
                     <Button Content="修改个人信息" Command="{Binding EditPersonalInfoCommand}"/>
                     <Button Content="修改密码" Command="{Binding ChangePasswordCommand}"/>
                     <Button Content="添加课程" Command="{Binding AddCourseCommand}" Visibility="{Binding User, Converter={StaticResource TeacherVisibilityConverter}}"/>
+                    <Button Content="添加教学班" Command="{Binding AddClassCommand}" Visibility="{Binding User, Converter={StaticResource AdministratorVisibilityConverter}}"/>
                 </StackPanel>
             </Grid>
             <Grid>
                 <views:ViewPersonalInfoView x:Name="viewPersonalInfoView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource ViewPersonalInfoVisibilityConverter}}"/>
                 <views:ChangePasswordView x:Name="changePasswordView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource ChangePasswordVisibilityConverter}}"/>
                 <views:AddCourseView x:Name="addCourseView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AddCourseVisibilityConverter}}"/>
+                <views:AddClassView x:Name="addClassView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AddClassVisibilityConverter}}"/>
             </Grid>
         </DockPanel>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using EducationalManagementSystem.Client.Models.ApplicationModels;
 using EducationalManagementSystem.Client.Models.CourseModels;
 using EducationalManagementSystem.Client.Models.HierarchyModels;
+using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -20,7 +21,7 @@ namespace EducationalManagementSystem.Client.ViewModels
     {
         public AddCourseViewModel()
         {
-            SummitCommand = new DelegateCommand(Summit, CanSummit);
+            SubmitCommand = new DelegateCommand(Submit, CanSubmit);
         }
 
         public MainWindowViewModel MainVM { get; set; }
@@ -39,8 +40,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             set => SetProperty(ref _Name, value);
         }
 
-        private double _Credit;
-        public double Credit
+        private double? _Credit;
+        public double? Credit
         {
             get => _Credit;
             set => SetProperty(ref _Credit, value);
@@ -50,7 +51,11 @@ namespace EducationalManagementSystem.Client.ViewModels
         public College College
         {
             get => _College;
-            set => SetProperty(ref _College, value);
+            set
+            {
+                SetProperty(ref _College, value);
+                RaisePropertyChanged(nameof(MajorList));
+            }
         }
 
         private Major _Major;
@@ -60,8 +65,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             set => SetProperty(ref _Major, value);
         }
 
-        private Course.PublicityType _Publicity;
-        public Course.PublicityType Publicity
+        private Course.PublicityType? _Publicity;
+        public Course.PublicityType? Publicity
         {
             get => _Publicity;
             set => SetProperty(ref _Publicity, value);
@@ -74,33 +79,56 @@ namespace EducationalManagementSystem.Client.ViewModels
             set => SetProperty(ref _Description, value);
         }
 
-        private List<College> _CollegeList;
         public List<College> CollegeList
         {
-            get => _CollegeList;
-            set => SetProperty(ref _CollegeList, value);
+            get => College.CollegeList.Select(n => n.Value).ToList();
         }
 
-        public ICommand SummitCommand { get; }
-        private void Summit()
+        public List<Major> MajorList
         {
-            var app = (AddCourseApplication)DataServiceFactory.DataService.NewObject(typeof(AddCourseApplication));
-            app.Applicant = MainVM.User;
-            app.State = Application.AuditState.Auditing;
-            app.CourseID = CourseID;
-            app.Name = Name;
-            app.Credit = Credit;
-            app.Major = Major;
-            app.Publicity = Publicity;
-            app.Description = Description;
-            MessageBox.Show("申请提交成功！");
+            get => Major.MajorList.Select(n => n.Value).Where(n => n.College == College).ToList();
         }
-        private bool CanSummit() => true;
+
+        public ICommand SubmitCommand { get; }
+        private void Submit()
+        {
+            if (string.IsNullOrEmpty(CourseID))
+                MessageBox.Show("请输入课程ID！");
+            else if (string.IsNullOrEmpty(Name))
+                MessageBox.Show("请输入课程名！");
+            else if (Credit == null)
+                MessageBox.Show("请输入合法的学分！");
+            else if (Credit <= 0)
+                MessageBox.Show("学分必须大于零");
+            else if (College == null)
+                MessageBox.Show("请选择学院！");
+            else if (Major == null)
+                MessageBox.Show("请选择专业！");
+            else if (Publicity == null)
+                MessageBox.Show("请选择授课对象！");
+            else if (!DataServiceFactory.DataService.CheckUniqueness(typeof(Course).GetProperty(nameof(CourseID)), CourseID))
+                MessageBox.Show("课程ID不能重复！");
+            else
+            {
+                var app = (AddCourseApplication)DataServiceFactory.DataService.NewObject(typeof(AddCourseApplication));
+                app.Applicant = MainVM.User;
+                app.State = Application.AuditState.Auditing;
+                app.CourseID = CourseID;
+                app.Name = Name;
+                app.Credit = Credit;
+                app.Major = Major;
+                app.Publicity = Publicity;
+                app.Description = Description;
+                MessageBox.Show("申请提交成功！");
+            }
+        }
+        private bool CanSubmit() => true;
 
         public void Show()
         {
             DataServiceFactory.DataService.GetAllObjects(typeof(College));
-            CollegeList = College.CollegeList.Select(n => n.Value).ToList();
+            DataServiceFactory.DataService.GetAllObjects(typeof(Major));
+            RaisePropertyChanged(nameof(CollegeList));
         }
     }
 }

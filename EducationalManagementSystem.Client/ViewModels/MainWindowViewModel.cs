@@ -23,6 +23,7 @@ namespace EducationalManagementSystem.Client.ViewModels
             EditPersonalInfoCommand = new DelegateCommand(EditPersonalInfo, CanEditPersonalInfo);
             ChangePasswordCommand = new DelegateCommand(ChangePassword, CanChangePassword);
             AddCourseCommand = new DelegateCommand(AddCourse, CanAddCourse);
+            AddClassCommand = new DelegateCommand(AddClass, CanAddClass);
         }
 
         #region ViewModels
@@ -69,6 +70,17 @@ namespace EducationalManagementSystem.Client.ViewModels
                 _AddCourseVM.MainVM = this;
             }
         }
+
+        private AddClassViewModel _AddClassVM;
+        public AddClassViewModel AddClassVM
+        {
+            get => _AddClassVM;
+            set
+            {
+                _AddClassVM = value;
+                _AddClassVM.MainVM = this;
+            }
+        }
         #endregion
 
         #region ViewState
@@ -78,7 +90,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             Default,
             ViewPersonalInfo,
             ChangePassword,
-            AddCourse
+            AddCourse,
+            AddClass
         }
 
         private ViewState _State = ViewState.Default;
@@ -147,6 +160,15 @@ namespace EducationalManagementSystem.Client.ViewModels
             State = ViewState.AddCourse;
         }
         public bool CanAddCourse() => true;
+        #endregion
+
+        #region AddClass
+        public ICommand AddClassCommand { get; }
+        public void AddClass()
+        {
+            State = ViewState.AddClass;
+        }
+        public bool CanAddClass() => true;
         #endregion
         #endregion
     }

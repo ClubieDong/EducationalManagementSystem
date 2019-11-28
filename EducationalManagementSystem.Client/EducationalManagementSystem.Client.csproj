@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ApplicationModels\AddCourseApplication.cs" />
     <Compile Include="Models\ApplicationModels\Application.cs" />
     <Compile Include="Models\CourseModels\Activity.cs" />
     <Compile Include="Models\CourseModels\Class.cs" />
@@ -105,6 +106,10 @@
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\Exceptions\Exceptions.cs" />
     <Compile Include="Services\LoginService.cs" />
+    <Compile Include="UserControls\ObjectSelector.xaml.cs">
+      <DependentUpon>ObjectSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AddClassViewModel.cs" />
     <Compile Include="ViewModels\AddCourseViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -114,6 +119,9 @@
     <Compile Include="ViewModels\ValueConverters\PublicityConverter.cs" />
     <Compile Include="ViewModels\ValueConverters\VisibilityConverter.cs" />
     <Compile Include="ViewModels\ViewPersonalInfoViewModel.cs" />
+    <Compile Include="Views\AddClassView.xaml.cs">
+      <DependentUpon>AddClassView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddCourseView.xaml.cs">
       <DependentUpon>AddCourseView.xaml</DependentUpon>
     </Compile>
@@ -127,6 +135,14 @@
       <DependentUpon>ViewPersonalInfoView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ObjectSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
