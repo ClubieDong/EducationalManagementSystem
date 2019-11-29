@@ -1,14 +1,15 @@
-﻿using EducationalManagementSystem.Client.Models.UserModels;
+﻿using EducationalManagementSystem.Client.Models.CourseModels;
 using EducationalManagementSystem.Client.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EducationalManagementSystem.Client.Models.CourseModels
+namespace EducationalManagementSystem.Client.Models.ApplicationModels
 {
-    public abstract class Activity : ObjectWithID
+    public class AddExaminationApplication : Application
     {
-        public static Dictionary<uint, Activity> ActivityList { get; } = new Dictionary<uint, Activity>();
-
         private DateTime? _StartTime;
         public DateTime? StartTime
         {
@@ -69,43 +70,6 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        public Activity CheckOverlap(IEnumerable<Activity> activityList)
-        {
-            foreach (var activity in activityList)
-                if (activity.StartTime < EndTime && StartTime < activity.EndTime)
-                    return activity;
-            return null;
-        }
-    }
-
-    public class Lesson : Activity
-    {
-        private Class _Class;
-        public Class Class
-        {
-            get
-            {
-                if (ID.HasValue && _Class == null)
-                    _Class = (Class)DataServiceFactory.DataService.GetValue(this, nameof(Class));
-                return _Class;
-            }
-            set
-            {
-                if (_Class == value)
-                    return;
-                _Class = value;
-                if (!ID.HasValue)
-                    return;
-                DataServiceFactory.DataService.SetValue(this, nameof(Class), value);
-            }
-        }
-
-        // Todo:
-        // HashSet<Student> SignedStudentList;
-    }
-
-    public class Examination : Activity
-    {
         private Class _Class;
         public Class Class
         {
@@ -166,15 +130,15 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             }
         }
 
-        private Dictionary<Student, Score> _ScoreList;
-        public Dictionary<Student, Score> ScoreList
+        public override void OnApproved()
         {
-            get
-            {
-                if (ID.HasValue && _ScoreList == null)
-                    _ScoreList = ScoreServiceFactory.ScoreService.GetScoreList(this);
-                return _ScoreList;
-            }
+            var examination = (Examination)DataServiceFactory.DataService.NewObject(typeof(Examination));
+            examination.Classroom = Classroom;
+            examination.StartTime = StartTime;
+            examination.EndTime = EndTime;
+            examination.Class = Class;
+            examination.Name = Name;
+            examination.Proportion = Proportion;
         }
     }
 }

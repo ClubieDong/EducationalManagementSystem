@@ -161,5 +161,21 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
                 return _ExaminationList;
             }
         }
+
+        private Dictionary<Student, Score> _ScoreList;
+        public Dictionary<Student, Score> ScoreList
+        {
+            get
+            {
+                if (ID.HasValue && _ScoreList == null)
+                    _ScoreList = ScoreServiceFactory.ScoreService.GetScoreList(this);
+                return _ScoreList;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"{Course.Name} {Name}";
+        }
     }
 }

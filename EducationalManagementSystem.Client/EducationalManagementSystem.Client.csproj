@@ -92,11 +92,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\ApplicationModels\AddCourseApplication.cs" />
+    <Compile Include="Models\ApplicationModels\AddExaminationActivity.cs" />
     <Compile Include="Models\ApplicationModels\Application.cs" />
     <Compile Include="Models\CourseModels\Activity.cs" />
     <Compile Include="Models\CourseModels\Class.cs" />
     <Compile Include="Models\CourseModels\Classroom.cs" />
     <Compile Include="Models\CourseModels\Course.cs" />
+    <Compile Include="Models\CourseModels\Score.cs" />
     <Compile Include="Models\HierarchyModels\College.cs" />
     <Compile Include="Models\HierarchyModels\Major.cs" />
     <Compile Include="Models\ObjectWithID.cs" />
@@ -109,14 +111,17 @@
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\Exceptions\Exceptions.cs" />
     <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\ScoreService.cs" />
     <Compile Include="UserControls\ObjectSelector.xaml.cs">
       <DependentUpon>ObjectSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddClassViewModel.cs" />
     <Compile Include="ViewModels\AddCourseViewModel.cs" />
+    <Compile Include="ViewModels\AddExaminationViewModel.cs" />
     <Compile Include="ViewModels\AuditViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ChooseCourseViewModel.cs" />
+    <Compile Include="ViewModels\InputScoreViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewPersonalInfoViewModel.cs" />
@@ -125,6 +130,9 @@
     </Compile>
     <Compile Include="Views\AddCourseView.xaml.cs">
       <DependentUpon>AddCourseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddExaminationView.xaml.cs">
+      <DependentUpon>AddExaminationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AuditView.xaml.cs">
       <DependentUpon>AuditView.xaml</DependentUpon>
@@ -136,6 +144,9 @@
       <DependentUpon>ChooseCourseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DataTemplateSelectors\ApplicationTypeSelector.cs" />
+    <Compile Include="Views\InputScoreView.xaml.cs">
+      <DependentUpon>InputScoreView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -144,6 +155,8 @@
     <Compile Include="Views\ValueConverters\GenderConverter.cs" />
     <Compile Include="Views\ValueConverters\PasswordBoxesConverter.cs" />
     <Compile Include="Views\ValueConverters\PublicityConverter.cs" />
+    <Compile Include="Views\ValueConverters\ScoreConverter.cs" />
+    <Compile Include="Views\ValueConverters\ScoreTypeConverter.cs" />
     <Compile Include="Views\ValueConverters\VisibilityConverter.cs" />
     <Compile Include="Views\ViewPersonalInfoView.xaml.cs">
       <DependentUpon>ViewPersonalInfoView.xaml</DependentUpon>
@@ -164,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddExaminationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AuditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ChooseCourseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InputScoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -215,7 +236,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

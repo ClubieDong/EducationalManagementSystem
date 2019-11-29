@@ -13,6 +13,8 @@ namespace EducationalManagementSystem.Client.Views.ValueConverters
                 return null;
             if (value is AddCourseApplication)
                 return "添加课程";
+            if (value is AddExaminationApplication)
+                return "添加考试";
             return null;
         }
 

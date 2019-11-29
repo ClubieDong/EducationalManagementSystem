@@ -59,7 +59,7 @@ namespace EducationalManagementSystem.Client.Services
                 id = (uint)reader[0];
             }
             // 创建对象，返回结果
-            var user = (User)new DatabaseDataService().CreateObject(id, typeof(User));
+            var user = (User)DataServiceFactory.DataService.CreateObject(id, typeof(User));
             return user;
         }
     }

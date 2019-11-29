@@ -36,6 +36,7 @@ namespace EducationalManagementSystem.Client.Models
 
             { typeof(Application).GUID, typeof(Application) },
             { typeof(AddCourseApplication).GUID, typeof(AddCourseApplication) },
+            { typeof(AddExaminationApplication).GUID, typeof(AddExaminationApplication) },
         };
 
         public uint? ID { get; set; }

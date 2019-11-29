@@ -107,6 +107,26 @@ namespace EducationalManagementSystem.Client.Models.ApplicationModels
             }
         }
 
+        private Score.ScoreType? _ScoreType;
+        public Score.ScoreType? ScoreType
+        {
+            get
+            {
+                if (ID.HasValue && _ScoreType == null)
+                    _ScoreType = (Score.ScoreType)DataServiceFactory.DataService.GetValue(this, nameof(ScoreType));
+                return _ScoreType;
+            }
+            set
+            {
+                if (_ScoreType == value)
+                    return;
+                _ScoreType = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(ScoreType), value);
+            }
+        }
+
         private string _Description;
         public string Description
         {

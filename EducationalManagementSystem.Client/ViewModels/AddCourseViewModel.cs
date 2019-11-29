@@ -68,6 +68,13 @@ namespace EducationalManagementSystem.Client.ViewModels
             set => SetProperty(ref _Publicity, value);
         }
 
+        private Score.ScoreType? _ScoreType;
+        public Score.ScoreType? ScoreType
+        {
+            get => _ScoreType;
+            set => SetProperty(ref _ScoreType, value);
+        }
+
         private string _Description;
         public string Description
         {
@@ -95,7 +102,7 @@ namespace EducationalManagementSystem.Client.ViewModels
             else if (Credit == null)
                 MessageBox.Show("请输入合法的学分！");
             else if (Credit <= 0)
-                MessageBox.Show("学分必须大于零");
+                MessageBox.Show("学分必须大于零！");
             else if (College == null)
                 MessageBox.Show("请选择学院！");
             else if (Major == null)
@@ -115,6 +122,7 @@ namespace EducationalManagementSystem.Client.ViewModels
                 app.Credit = Credit;
                 app.Major = Major;
                 app.Publicity = Publicity;
+                app.ScoreType = ScoreType;
                 app.Description = Description;
                 MessageBox.Show("申请提交成功！");
             }

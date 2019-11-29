@@ -19,6 +19,8 @@ namespace EducationalManagementSystem.Client
             vm.AddClassVM = (AddClassViewModel)addClassView.DataContext;
             vm.AuditVM = (AuditViewModel)auditView.DataContext;
             vm.ChooseCourseVM = (ChooseCourseViewModel)chooseCourseView.DataContext;
+            vm.InputScoreVM = (InputScoreViewModel)inputScoreView.DataContext;
+            vm.AddExaminationVM = (AddExaminationViewModel)addExaminationView.DataContext;
         }
     }
 }

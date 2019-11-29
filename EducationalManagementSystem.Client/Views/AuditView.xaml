@@ -76,6 +76,8 @@
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="2"/>
                                             <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
@@ -93,11 +95,56 @@
                                         <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Major.Name}" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Row="10" Grid.Column="0" Text="授课对象：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding Publicity, Converter={StaticResource PublicityConverter}}" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="12" Grid.Column="0" Text="课程简介：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="12" Grid.Column="1" Text="{Binding Description}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="12" Grid.Column="0" Text="评分类型：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="12" Grid.Column="1" Text="{Binding ScoreType, Converter={StaticResource ScoreTypeConverter}}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="14" Grid.Column="0" Text="课程简介：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="14" Grid.Column="1" Text="{Binding Description}" VerticalAlignment="Center"/>
                                     </Grid>
                                 </DataTemplate>
                             </datatemplateselectors:ApplicationTypeSelector.AddCourseApplicationTemplate>
+                            <datatemplateselectors:ApplicationTypeSelector.AddExaminationApplicationTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5,2">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="2"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="课程：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Class.Course.Name}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="教学班：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Class.Name}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="4" Grid.Column="0" Text="教室：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ClassroomID}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="6" Grid.Column="0" Text="考试名称：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="8" Grid.Column="0" Text="考试成绩占比：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding Proportion, StringFormat={}{0:P0}}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="10" Grid.Column="0" Text="考试日期：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding StartTime, StringFormat=MM/dd}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="12" Grid.Column="0" Text="考试开始时间：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="12" Grid.Column="1" Text="{Binding StartTime, StringFormat=HH:mm}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="14" Grid.Column="0" Text="考试结束时间：" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="14" Grid.Column="1" Text="{Binding EndTime, StringFormat=HH:mm}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </datatemplateselectors:ApplicationTypeSelector.AddExaminationApplicationTemplate>
                         </datatemplateselectors:ApplicationTypeSelector>
                     </DataGridTemplateColumn.CellTemplateSelector>
                 </DataGridTemplateColumn>

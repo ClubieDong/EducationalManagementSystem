@@ -13,7 +13,6 @@ namespace EducationalManagementSystem.Client.Services
         void SetValue(ObjectWithID obj, string propertyName, object value);
         ObjectWithID NewObject(Type type);
         object GetList(ObjectWithID obj, string propertyName);
-        object GetDictionary(ObjectWithID obj, string propertyName);
         void GetAllObjects(Type type);
         bool CheckUniqueness(PropertyInfo property, object value);
     }
@@ -175,7 +174,6 @@ namespace EducationalManagementSystem.Client.Services
             foreach (var relatedProperty in relatedType.GetProperties())
             {
                 var relatedPropertyType = relatedProperty.PropertyType;
-                // 多对1
                 if (objType == relatedPropertyType || objType.IsSubclassOf(relatedPropertyType))
                 {
                     var idList = new List<uint>();
@@ -192,39 +190,8 @@ namespace EducationalManagementSystem.Client.Services
                     }
                     return result;
                 }
-                // 多对多
-                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(List<>) && (objType == relatedPropertyType || objType.IsSubclassOf(relatedPropertyType.GenericTypeArguments[0])))
-                {
-                    var first = objType.Name;
-                    var second = relatedType.Name;
-                    if (string.Compare(first, second) > 0)
-                    {
-                        var temp = first;
-                        first = second;
-                        second = temp;
-                    }
-                    var idList = new List<uint>();
-                    Command.CommandText = $"SELECT {relatedType.Name}ID FROM {first}_{second} WHERE {objType.Name} = {obj.ID}";
-                    using (var reader = Command.ExecuteReader())
-                        while (reader.Read())
-                            idList.Add((uint)reader[0]);
-                    var result = propertyType.GetConstructor(Type.EmptyTypes).Invoke(null);
-                    var addFunc = propertyType.GetMethod("Add");
-                    foreach (var id in idList)
-                    {
-                        var data = CreateObject(id, relatedType);
-                        addFunc.Invoke(result, new object[] { data });
-                    }
-                    return result;
-                }
             }
             return null;
-            //throw new ReflectionException();
-        }
-
-        public object GetDictionary(ObjectWithID obj, string propertyName)
-        {
-            throw new NotImplementedException();
         }
 
         public void GetAllObjects(Type type)

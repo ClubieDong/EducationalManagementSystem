@@ -19,6 +19,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             AddClassCommand = new DelegateCommand(AddClass, CanAddClass);
             AuditCommand = new DelegateCommand(Audit, CanAudit);
             ChooseCourseCommand = new DelegateCommand(ChooseCourse, CanChooseCourse);
+            InputScoreCommand = new DelegateCommand(InputScore, CanInputScore);
+            AddExaminationCommand = new DelegateCommand(AddExamination, CanAddExamination);
         }
 
         #region ViewModels
@@ -98,6 +100,28 @@ namespace EducationalManagementSystem.Client.ViewModels
                 _ChooseCourseVM.MainVM = this;
             }
         }
+
+        private InputScoreViewModel _InputScoreVM;
+        public InputScoreViewModel InputScoreVM
+        {
+            get => _InputScoreVM;
+            set
+            {
+                _InputScoreVM = value;
+                _InputScoreVM.MainVM = this;
+            }
+        }
+
+        private AddExaminationViewModel _AddExaminationVM;
+        public AddExaminationViewModel AddExaminationVM
+        {
+            get => _AddExaminationVM;
+            set
+            {
+                _AddExaminationVM = value;
+                _AddExaminationVM.MainVM = this;
+            }
+        }
         #endregion
 
         #region ViewState
@@ -111,6 +135,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             AddClass,
             Audit,
             ChooseCourse,
+            InputScore,
+            AddExamination,
         }
 
         private ViewState _State = ViewState.Default;
@@ -122,7 +148,7 @@ namespace EducationalManagementSystem.Client.ViewModels
         #endregion
 
         #region User
-        private User _User = LoginServiceFactory.LoginService.Login("161810129", "Xixi");
+        private User _User = LoginServiceFactory.LoginService.Login("teacher", "teacher");
         public User User
         {
             get => _User;
@@ -206,6 +232,24 @@ namespace EducationalManagementSystem.Client.ViewModels
             State = ViewState.ChooseCourse;
         }
         public bool CanChooseCourse() => true;
+        #endregion
+
+        #region InputScore
+        public ICommand InputScoreCommand { get; }
+        public void InputScore()
+        {
+            State = ViewState.InputScore;
+        }
+        public bool CanInputScore() => true;
+        #endregion
+
+        #region AddExamination
+        public ICommand AddExaminationCommand { get; }
+        public void AddExamination()
+        {
+            State = ViewState.AddExamination;
+        }
+        public bool CanAddExamination() => true;
         #endregion
         #endregion
     }

@@ -19,7 +19,11 @@
     <valueconverters:VisibilityConverter x:Key="AddClassVisibilityConverter" Object="AddClass"/>
     <valueconverters:VisibilityConverter x:Key="AuditVisibilityConverter" Object="Audit"/>
     <valueconverters:VisibilityConverter x:Key="ChooseCourseVisibilityConverter" Object="ChooseCourse"/>
+    <valueconverters:VisibilityConverter x:Key="InputScoreVisibilityConverter" Object="InputScore"/>
+    <valueconverters:VisibilityConverter x:Key="AddExaminationVisibilityConverter" Object="AddExamination"/>
     <valueconverters:PublicityConverter x:Key="PublicityConverter"/>
     <valueconverters:ApplicationTypeConverter x:Key="ApplicationTypeConverter"/>
     <valueconverters:ApplicationStateConverter x:Key="ApplicationStateConverter"/>
+    <valueconverters:ScoreTypeConverter x:Key="ScoreTypeConverter"/>
+    <valueconverters:ScoreConverter x:Key="ScoreConverter"/>
 </ResourceDictionary>
