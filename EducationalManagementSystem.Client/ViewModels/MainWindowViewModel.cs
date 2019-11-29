@@ -139,7 +139,7 @@ namespace EducationalManagementSystem.Client.ViewModels
             AddExamination,
         }
 
-        private ViewState _State = ViewState.Default;
+        private ViewState _State = ViewState.Login;
         public ViewState State
         {
             get => _State;
@@ -148,7 +148,7 @@ namespace EducationalManagementSystem.Client.ViewModels
         #endregion
 
         #region User
-        private User _User = LoginServiceFactory.LoginService.Login("teacher", "teacher");
+        private User _User;
         public User User
         {
             get => _User;
