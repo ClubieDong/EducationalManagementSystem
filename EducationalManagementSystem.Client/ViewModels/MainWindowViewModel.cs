@@ -1,5 +1,4 @@
 ﻿using EducationalManagementSystem.Client.Models.UserModels;
-using EducationalManagementSystem.Client.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using System.Windows;

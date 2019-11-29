@@ -7,8 +7,6 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Application = EducationalManagementSystem.Client.Models.ApplicationModels.Application;
@@ -96,7 +94,7 @@ namespace EducationalManagementSystem.Client.ViewModels
                 MessageBox.Show("请选择教室！");
             else if (string.IsNullOrEmpty(Name))
                 MessageBox.Show("请输入考试名称！");
-            else if (Proportion ==  null)
+            else if (Proportion == null)
                 MessageBox.Show("请输入考试成绩占比！");
             else if (Date == null)
                 MessageBox.Show("请输入考试日期！");
