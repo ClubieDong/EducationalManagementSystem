@@ -2,14 +2,7 @@
 using EducationalManagementSystem.Client.Services;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace EducationalManagementSystem.Client.ViewModels
@@ -25,6 +18,7 @@ namespace EducationalManagementSystem.Client.ViewModels
             AddCourseCommand = new DelegateCommand(AddCourse, CanAddCourse);
             AddClassCommand = new DelegateCommand(AddClass, CanAddClass);
             AuditCommand = new DelegateCommand(Audit, CanAudit);
+            ChooseCourseCommand = new DelegateCommand(ChooseCourse, CanChooseCourse);
         }
 
         #region ViewModels
@@ -93,6 +87,17 @@ namespace EducationalManagementSystem.Client.ViewModels
                 _AuditVM.MainVM = this;
             }
         }
+
+        private ChooseCourseViewModel _ChooseCourseVM;
+        public ChooseCourseViewModel ChooseCourseVM
+        {
+            get => _ChooseCourseVM;
+            set
+            {
+                _ChooseCourseVM = value;
+                _ChooseCourseVM.MainVM = this;
+            }
+        }
         #endregion
 
         #region ViewState
@@ -104,7 +109,8 @@ namespace EducationalManagementSystem.Client.ViewModels
             ChangePassword,
             AddCourse,
             AddClass,
-            Audit
+            Audit,
+            ChooseCourse,
         }
 
         private ViewState _State = ViewState.Default;
@@ -116,7 +122,7 @@ namespace EducationalManagementSystem.Client.ViewModels
         #endregion
 
         #region User
-        private User _User = LoginServiceFactory.LoginService.Login("admin", "admin");
+        private User _User = LoginServiceFactory.LoginService.Login("161810129", "Xixi");
         public User User
         {
             get => _User;
@@ -191,6 +197,15 @@ namespace EducationalManagementSystem.Client.ViewModels
             State = ViewState.Audit;
         }
         public bool CanAudit() => true;
+        #endregion
+
+        #region ChooseCourse
+        public ICommand ChooseCourseCommand { get; }
+        public void ChooseCourse()
+        {
+            State = ViewState.ChooseCourse;
+        }
+        public bool CanChooseCourse() => true;
         #endregion
         #endregion
     }

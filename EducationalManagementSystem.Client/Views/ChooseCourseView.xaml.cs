@@ -5,18 +5,18 @@ using System.Windows.Controls;
 namespace EducationalManagementSystem.Client.Views
 {
     /// <summary>
-    /// AddClassView.xaml 的交互逻辑
+    /// ChooseCourseView.xaml 的交互逻辑
     /// </summary>
-    public partial class AddClassView : UserControl
+    public partial class ChooseCourseView : UserControl
     {
-        public AddClassView()
+        public ChooseCourseView()
         {
             InitializeComponent();
         }
 
         private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var vm = (AddClassViewModel)DataContext;
+            var vm = (ChooseCourseViewModel)DataContext;
             if (Visibility == Visibility.Visible)
                 vm.Show();
         }

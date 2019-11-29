@@ -9,7 +9,7 @@ namespace EducationalManagementSystem.Client.Models
 {
     public abstract class ObjectWithID
     {
-        protected static readonly Dictionary<Guid, Type> _GuidToType= new Dictionary<Guid, Type>()
+        protected static readonly Dictionary<Guid, Type> _GuidToType = new Dictionary<Guid, Type>()
         {
             { typeof(ObjectWithID).GUID, typeof(ObjectWithID) },
 

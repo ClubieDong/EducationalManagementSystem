@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EducationalManagementSystem.Client.Models;
 using MySql.Data.MySqlClient;
-using System.IO;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
-using EducationalManagementSystem.Client.Models;
-using EducationalManagementSystem.Client.Models.UserModels;
-using System.Collections.ObjectModel;
-using EducationalManagementSystem.Client.Services.Exceptions;
 
 namespace EducationalManagementSystem.Client.Services
 {
     public interface IDataService
     {
+        ObjectWithID CreateObject(uint id, Type type);
         object GetValue(ObjectWithID obj, string propertyName);
         void SetValue(ObjectWithID obj, string propertyName, object value);
         ObjectWithID NewObject(Type type);
@@ -182,7 +176,7 @@ namespace EducationalManagementSystem.Client.Services
             {
                 var relatedPropertyType = relatedProperty.PropertyType;
                 // 多对1
-                if (objType.IsSubclassOf(relatedPropertyType))
+                if (objType == relatedPropertyType || objType.IsSubclassOf(relatedPropertyType))
                 {
                     var idList = new List<uint>();
                     Command.CommandText = $"SELECT ID FROM {relatedType.Name} WHERE {relatedProperty.Name} = {obj.ID}";
@@ -199,7 +193,7 @@ namespace EducationalManagementSystem.Client.Services
                     return result;
                 }
                 // 多对多
-                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(List<>) && objType.IsSubclassOf(relatedPropertyType.GenericTypeArguments[0]))
+                if (relatedPropertyType.IsGenericType && relatedPropertyType.GetGenericTypeDefinition() == typeof(List<>) && (objType == relatedPropertyType || objType.IsSubclassOf(relatedPropertyType.GenericTypeArguments[0])))
                 {
                     var first = objType.Name;
                     var second = relatedType.Name;

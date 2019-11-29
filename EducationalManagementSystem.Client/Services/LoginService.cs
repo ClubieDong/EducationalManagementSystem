@@ -1,15 +1,8 @@
 ﻿using EducationalManagementSystem.Client.Models.UserModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using EducationalManagementSystem.Client.Services.Exceptions;
+using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using MySql.Data;
-using System.Data;
-using MySql.Data.MySqlClient;
-using EducationalManagementSystem.Client.Services.Exceptions;
-using EducationalManagementSystem.Client.Models;
 
 namespace EducationalManagementSystem.Client.Services
 {

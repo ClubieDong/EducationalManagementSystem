@@ -51,6 +51,7 @@
                     <Button Content="添加课程" Command="{Binding AddCourseCommand}" Visibility="{Binding User, Converter={StaticResource TeacherVisibilityConverter}}"/>
                     <Button Content="添加教学班" Command="{Binding AddClassCommand}" Visibility="{Binding User, Converter={StaticResource AdministratorVisibilityConverter}}"/>
                     <Button Content="审核申请" Command="{Binding AuditCommand}" Visibility="{Binding User, Converter={StaticResource AdministratorVisibilityConverter}}"/>
+                    <Button Content="选课" Command="{Binding ChooseCourseCommand}" Visibility="{Binding User, Converter={StaticResource StudentVisibilityConverter}}"/>
                 </StackPanel>
             </Grid>
             <Grid>
@@ -59,6 +60,7 @@
                 <views:AddCourseView x:Name="addCourseView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AddCourseVisibilityConverter}}"/>
                 <views:AddClassView x:Name="addClassView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AddClassVisibilityConverter}}"/>
                 <views:AuditView x:Name="auditView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource AuditVisibilityConverter}}"/>
+                <views:ChooseCourseView x:Name="chooseCourseView" Visibility="{Binding ElementName=mainWindow, Path=DataContext.State, Converter={StaticResource ChooseCourseVisibilityConverter}}"/>
             </Grid>
         </DockPanel>
     </Grid>

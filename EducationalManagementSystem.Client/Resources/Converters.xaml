@@ -18,6 +18,7 @@
     <valueconverters:VisibilityConverter x:Key="AddCourseVisibilityConverter" Object="AddCourse"/>
     <valueconverters:VisibilityConverter x:Key="AddClassVisibilityConverter" Object="AddClass"/>
     <valueconverters:VisibilityConverter x:Key="AuditVisibilityConverter" Object="Audit"/>
+    <valueconverters:VisibilityConverter x:Key="ChooseCourseVisibilityConverter" Object="ChooseCourse"/>
     <valueconverters:PublicityConverter x:Key="PublicityConverter"/>
     <valueconverters:ApplicationTypeConverter x:Key="ApplicationTypeConverter"/>
     <valueconverters:ApplicationStateConverter x:Key="ApplicationStateConverter"/>

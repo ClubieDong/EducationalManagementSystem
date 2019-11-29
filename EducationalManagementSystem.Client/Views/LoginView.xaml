@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="忘记密码？" VerticalAlignment="Center" TextDecorations="Underline" ToolTip="请在线下找管理员重置密码。" ToolTipService.Placement="Top" ToolTipService.InitialShowDelay="0"/>
+            <TextBlock Grid.Column="0" Text="忘记密码？" VerticalAlignment="Center" TextDecorations="Underline" ToolTip="请在线下找管理员重置密码。" ToolTipService.Placement="Top" ToolTipService.ShowDuration="99999" ToolTipService.InitialShowDelay="0"/>
             <Button Grid.Column="2" Content="登录" Padding="20, 5" IsDefault="True" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=pwd}"/>
         </Grid>
     </Grid>

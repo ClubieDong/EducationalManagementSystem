@@ -2,10 +2,6 @@
 using EducationalManagementSystem.Client.Services;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EducationalManagementSystem.Client.Models.CourseModels
 {
@@ -50,6 +46,46 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
                 if (!ID.HasValue)
                     return;
                 DataServiceFactory.DataService.SetValue(this, nameof(Teacher), value);
+            }
+        }
+
+        private string _Name;
+        public string Name
+        {
+            get
+            {
+                if (ID.HasValue && _Name == null)
+                    _Name = (string)DataServiceFactory.DataService.GetValue(this, nameof(Name));
+                return _Name;
+            }
+            set
+            {
+                if (_Name == value)
+                    return;
+                _Name = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(Name), value);
+            }
+        }
+
+        private uint? _MaxStudent;
+        public uint? MaxStudent
+        {
+            get
+            {
+                if (ID.HasValue && _MaxStudent == null)
+                    _MaxStudent = (uint)DataServiceFactory.DataService.GetValue(this, nameof(MaxStudent));
+                return _MaxStudent;
+            }
+            set
+            {
+                if (_MaxStudent == value)
+                    return;
+                _MaxStudent = value;
+                if (!ID.HasValue)
+                    return;
+                DataServiceFactory.DataService.SetValue(this, nameof(MaxStudent), value);
             }
         }
 
@@ -99,7 +135,7 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
             get
             {
                 if (ID.HasValue && _StudentList == null)
-                    _StudentList = (List<Student>)DataServiceFactory.DataService.GetList(this, nameof(StudentList));
+                    _StudentList = ChooseCourseServiceFactory.ChooseCourseService.GetStudentList(this);
                 return _StudentList;
             }
         }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EducationalManagementSystem.Client.Models.CourseModels;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using EducationalManagementSystem.Client.Models.CourseModels;
 
 namespace EducationalManagementSystem.Client.Views.ValueConverters
 {

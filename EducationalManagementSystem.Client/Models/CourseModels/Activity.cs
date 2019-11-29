@@ -2,9 +2,6 @@
 using EducationalManagementSystem.Client.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EducationalManagementSystem.Client.Models.CourseModels
 {
@@ -70,6 +67,14 @@ namespace EducationalManagementSystem.Client.Models.CourseModels
                     return;
                 DataServiceFactory.DataService.SetValue(this, nameof(Classroom), value);
             }
+        }
+
+        public Activity CheckOverlap(IEnumerable<Activity> activityList)
+        {
+            foreach (var activity in activityList)
+                if (activity.StartTime < EndTime && StartTime < activity.EndTime)
+                    return activity;
+            return null;
         }
     }
 

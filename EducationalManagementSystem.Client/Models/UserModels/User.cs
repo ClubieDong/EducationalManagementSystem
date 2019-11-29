@@ -1,7 +1,6 @@
 ﻿using EducationalManagementSystem.Client.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace EducationalManagementSystem.Client.Models.UserModels
 {

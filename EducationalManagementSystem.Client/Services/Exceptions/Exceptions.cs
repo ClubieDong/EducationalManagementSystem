@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EducationalManagementSystem.Client.Models.CourseModels;
+using System;
 
 namespace EducationalManagementSystem.Client.Services.Exceptions
 {
@@ -10,4 +7,9 @@ namespace EducationalManagementSystem.Client.Services.Exceptions
     public class WrongPasswordException : ApplicationException { }
     public class ReflectionException : ApplicationException { }
     public class IDDuplicatedException : ApplicationException { }
+    public class ActivityOverlapException : ApplicationException
+    {
+        public Activity OverlappedActivity1 { get; set; }
+        public Activity OverlappedActivity2 { get; set; }
+    }
 }

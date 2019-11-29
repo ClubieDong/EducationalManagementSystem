@@ -1,16 +1,12 @@
 ﻿using EducationalManagementSystem.Client.Models.ApplicationModels;
 using EducationalManagementSystem.Client.Models.CourseModels;
 using EducationalManagementSystem.Client.Models.HierarchyModels;
-using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Application = EducationalManagementSystem.Client.Models.ApplicationModels.Application;

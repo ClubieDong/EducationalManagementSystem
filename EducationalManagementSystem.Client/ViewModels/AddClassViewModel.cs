@@ -1,5 +1,4 @@
-﻿using EducationalManagementSystem.Client.Models.ApplicationModels;
-using EducationalManagementSystem.Client.Models.CourseModels;
+﻿using EducationalManagementSystem.Client.Models.CourseModels;
 using EducationalManagementSystem.Client.Models.UserModels;
 using EducationalManagementSystem.Client.Services;
 using Prism.Commands;
@@ -8,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -38,6 +35,20 @@ namespace EducationalManagementSystem.Client.ViewModels
         {
             get => _Teacher;
             set => SetProperty(ref _Teacher, value);
+        }
+
+        private string _Name;
+        public string Name
+        {
+            get => _Name;
+            set => SetProperty(ref _Name, value);
+        }
+
+        private uint? _MaxStudent;
+        public uint? MaxStudent
+        {
+            get => _MaxStudent;
+            set => SetProperty(ref _MaxStudent, value);
         }
 
         private DateTime? _ChooseStartDate;
@@ -256,6 +267,10 @@ namespace EducationalManagementSystem.Client.ViewModels
                 MessageBox.Show("请选择课程！");
             else if (Teacher == null)
                 MessageBox.Show("请选择老师！");
+            else if (string.IsNullOrEmpty(Name))
+                MessageBox.Show("请输入课程名！");
+            else if (MaxStudent == null)
+                MessageBox.Show("请输入最大人数！");
             else if (ChooseStartDate == null)
                 MessageBox.Show("请选择选课开始日期！");
             else if (ChooseStartTime == null)
@@ -273,6 +288,8 @@ namespace EducationalManagementSystem.Client.ViewModels
                 var c = (Class)DataServiceFactory.DataService.NewObject(typeof(Class));
                 c.Course = Course;
                 c.Teacher = Teacher;
+                c.Name = Name;
+                c.MaxStudent = MaxStudent;
                 c.ChooseStartTime = ChooseStartDate + ChooseStartTime.Value.TimeOfDay;
                 c.ChooseEndTime = ChooseEndDate + ChooseEndTime.Value.TimeOfDay;
                 foreach (var i in LessonList)
